@@ -1,0 +1,735 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ShopVerse — Fashion, Gadgets & More</title>
+  <meta name="description" content="ShopVerse: Discover trending fashion, gadgets, school uniforms and more. Fast, secure checkout with wishlists, reviews, and order tracking." />
+  <meta name="keywords" content="ecommerce, fashion, gadgets, men, women, uniforms, shop online, kenya" />
+  <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#000000">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="script.js"></script>
+  <meta property="og:title" content="ShopVerse — Fashion, Gadgets & More" />
+  <meta property="og:description" content="Discover the best fashion, gadgets and more. New arrivals daily." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1549213783-8284d0336c83?q=80&w=1200&auto=format&fit=crop" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <style>
+    :root{
+      --bg:#0b0c10; --muted:#1f2833; --card:#111318; --text:#e8f0fe; --sub:#c5c6c7; --brand:#06b6d4; --brand-2:#a78bfa; --accent:#22c55e; --danger:#ef4444; --warn:#f59e0b;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,'Noto Sans','Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol';color:var(--text);background:linear-gradient(180deg,#0b0c10 0%,#0d0f14 100%)}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{max-width:1200px;margin:0 auto;padding:0 16px}
+    .topbar{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:6px 0;font-size:12px;color:var(--sub)}
+    .pill{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);padding:6px 10px;border-radius:999px}
+    .header{position:sticky;top:0;z-index:50;background:rgba(11,12,16,.75);backdrop-filter: blur(10px);border-bottom:1px solid rgba(255,255,255,.06)}
+    .nav{display:grid;grid-template-columns:180px 1fr auto;gap:16px;align-items:center;padding:14px 0}
+    .logo{font-weight:800;letter-spacing:.5px;font-size:22px;background:linear-gradient(90deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .search{display:flex;gap:10px;align-items:center}
+    .search input{width:100%;padding:12px 14px;border-radius:12px;background:#0f1218;border:1px solid rgba(255,255,255,.08);color:var(--text)}
+    .search-results{position:absolute;background:#0f1218;border:1px solid rgba(255,255,255,.1);border-radius:12px;margin-top:6px;max-height:280px;overflow:auto;width:min(620px,calc(100vw - 32px));display:none}
+    .search-results a{display:flex;justify-content:space-between;padding:10px 12px;border-bottom:1px dashed rgba(255,255,255,.06)}
+    .search-results a:last-child{border-bottom:0}
+    .menu{display:flex;gap:18px;align-items:center}
+    .menu a{font-weight:600;color:#dbeafe}
+    .iconbtn{position:relative;border:1px solid rgba(255,255,255,.1);padding:10px 12px;border-radius:14px;background:#0f1218}
+    .badge{position:absolute;top:-6px;right:-6px;background:var(--danger);color:white;border-radius:999px;font-size:10px;padding:2px 6px}/* Breadcrumb */
+.breadcrumb{font-size:12px;color:var(--sub);display:flex;gap:6px;align-items:center;padding:10px 0}
+
+/* Hero */
+.hero{position:relative;border-radius:20px;overflow:hidden;background:#0d1117;border:1px solid rgba(255,255,255,.08)}
+.hero-slide{position:relative;min-height:360px;display:none}
+.hero-slide.active{display:block}
+.hero-slide img{width:100%;height:360px;object-fit:cover;filter:saturate(1.05)}
+.hero-content{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:10px;padding:32px;background:linear-gradient(90deg,rgba(0,0,0,.55),rgba(0,0,0,.2),transparent)}
+.hero h1{font-size:42px;margin:0}
+.cta{display:flex;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 16px;border-radius:14px;border:1px solid rgba(255,255,255,.12);font-weight:700}
+.btn.primary{background:linear-gradient(90deg,var(--brand),var(--brand-2));color:#0b0c10}
+.btn.secondary{background:#0f1218;color:var(--text)}
+.slider-dots{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:8px}
+.dot{width:10px;height:10px;border-radius:999px;background:rgba(255,255,255,.35);border:1px solid rgba(255,255,255,.6);cursor:pointer}
+.dot.active{background:white}
+
+/* Promo strip */
+.promo{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}
+.promo .card{background:#0f1218;border:1px solid rgba(255,255,255,.06);padding:14px;border-radius:16px;display:flex;gap:10px;align-items:center}
+
+/* Product sections */
+.section{margin:26px 0}
+.section h2{margin:0 0 14px;font-size:22px}
+.grid{display:grid;gap:14px}
+.grid.cols-4{grid-template-columns:repeat(4,1fr)}
+.grid.cols-5{grid-template-columns:repeat(5,1fr)}
+.card.product{background:#0f1218;border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.product .thumb{position:relative;aspect-ratio:1/1;overflow:hidden}
+.product .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .3s ease}
+.product:hover .thumb img{transform:scale(1.05)}
+.product .meta{padding:12px;display:flex;flex-direction:column;gap:8px}
+.price{display:flex;gap:8px;align-items:center}
+.price .old{color:var(--sub);text-decoration:line-through}
+.rating{font-size:12px;color:#fde047}
+.actions{display:flex;gap:8px}
+.actions .btn{padding:10px 12px;font-weight:600}
+
+/* Category containers with one big + four small */
+.category-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:14px}
+.category-row .tile{position:relative;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08);cursor:pointer}
+.category-row .tile img{width:100%;height:100%;object-fit:cover;aspect-ratio:3/2}
+.category-row .tile.big{grid-row:1/span 1;grid-column:1/span 2;aspect-ratio:8/5}
+.tile .label{position:absolute;bottom:10px;left:10px;background:rgba(0,0,0,.55);padding:6px 10px;border-radius:999px;font-weight:700}
+
+/* Drawers & modals */
+.drawer{position:fixed;inset:0;display:none}
+.drawer.open{display:block}
+.drawer .backdrop{position:absolute;inset:0;background:rgba(0,0,0,.5)}
+.drawer .panel{position:absolute;top:0;right:0;width:min(420px,92vw);height:100%;background:#0f1218;border-left:1px solid rgba(255,255,255,.1);padding:16px;overflow:auto}
+.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center}
+.modal.open{display:flex}
+.modal .dialog{background:#0f1218;border:1px solid rgba(255,255,255,.1);border-radius:16px;max-width:560px;width:92vw;padding:18px}
+
+/* Accordions */
+.accordion{border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden}
+.accordion details{border-bottom:1px solid rgba(255,255,255,.06)}
+.accordion details:last-child{border-bottom:0}
+.accordion summary{cursor:pointer;padding:12px 14px;font-weight:600;background:#0f1218}
+.accordion .content{padding:0 14px 14px;color:var(--sub)}
+
+/* Footer */
+footer{margin-top:36px;border-top:1px solid rgba(255,255,255,.08);background:#0f1218}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:18px;padding:22px 0}
+.footnote{font-size:12px;color:var(--sub);padding:12px 0;border-top:1px solid rgba(255,255,255,.06)}
+
+/* Utilities */
+.hidden{display:none}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+
+/* Responsive */
+@media (max-width: 980px){
+  .promo{grid-template-columns:repeat(2,1fr)}
+  .grid.cols-4{grid-template-columns:repeat(2,1fr)}
+  .grid.cols-5{grid-template-columns:repeat(2,1fr)}
+  .category-row{grid-template-columns:1fr 1fr;}
+  .category-row .tile.big{grid-column:1/span 2}
+}
+@media (max-width: 640px){
+  .nav{grid-template-columns:1fr auto;grid-template-areas:"logo actions" "search search";gap:10px}
+  .logo{grid-area:logo}
+  .actions{grid-area:actions}
+  .search{grid-area:search}
+  .promo{grid-template-columns:1fr}
+}
+
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org","@type":"WebSite","name":"ShopVerse","url":"https://example.com",
+    "potentialAction":{"@type":"SearchAction","target":"https://example.com/search?q={query}","query-input":"required name=query"}
+  }
+  </script>
+</head>
+<body>
+  <a class="sr-only" href="#main">Skip to content</a>
+  <!-- Topbar -->
+  <div class="header">
+    <div class="container topbar">
+      <div style="display:flex;gap:10px;align-items:center">
+        <span class="pill" aria-label="language switcher"><button id="langToggle" title="Change language">EN</button></span>
+        <span class="pill" aria-label="currency switcher"><button id="curToggle" title="Change currency">KES</button></span>
+        <span class="pill">Call/WhatsApp: +254 700 000 000</span>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <a href="#track" class="pill" id="openTrack">Track Order</a>
+        <a href="#help" class="pill">Help</a>
+        <a href="#login" class="pill" id="openLogin">Login / Register</a>
+      </div>
+    </div>
+    <!-- Nav -->
+    <div class="container nav" role="navigation" aria-label="Primary">
+      <div class="logo">ShopVerse</div>
+      <div class="search" style="position:relative">
+        <input id="searchInput" type="search" aria-label="Search products" placeholder="Search for jeans, phones, shoes…" autocomplete="off" />
+        <div id="searchResults" class="search-results" role="listbox" aria-label="Search suggestions"></div>
+      </div>
+      <div class="actions">
+        <a class="iconbtn" href="#wishlist" id="openWishlist" aria-label="Open wishlist">❤<span class="badge" id="wishCount">0</span></a>
+        <a class="iconbtn" href="#cart" id="openCart" aria-label="Open cart">🛒<span class="badge" id="cartCount">0</span></a>
+      </div>
+      <div class="menu container" style="grid-column:1/-1; padding-bottom:10px">
+        <a href="#men" onclick="redirectToCategory('men')">Men</a>
+        <a href="#women" onclick="redirectToCategory('women')">Women</a>
+        <a href="#electronics" onclick="redirectToCategory('electronics')">Electronics</a>
+        <a href="#uniforms" onclick="redirectToCategory('uniforms')">School Uniforms</a>
+        <a href="#blog">Blog</a>
+        <a href="#about">About</a>
+      </div>
+    </div>
+  </div>  <main id="main" class="container">
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <span>Home</span> › <span>Shop</span>
+    </nav><!-- HERO SLIDER -->
+<section class="hero" aria-label="Featured promotions">
+  <div class="hero-slide active" data-index="0">
+    <img src="https://images.unsplash.com/photo-1558885544-2defc62e2f9b?q=80&w=1600&auto=format&fit=crop" alt="Trendy fashion collection" loading="eager" />
+    <div class="hero-content">
+      <h1>Welcome to Our Shop</h1>
+      <p>Discover the best fashion, gadgets, and more.</p>
+      <div class="cta">
+        <a class="btn primary" href="#products">Shop Now</a>
+        <a class="btn secondary" href="#new">New Arrivals</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-slide" data-index="1">
+    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1600&auto=format&fit=crop" alt="Latest gadgets and accessories" loading="lazy" />
+    <div class="hero-content">
+      <h1>Latest Tech</h1>
+      <p>Smartphones, audio & accessories with warranty.</p>
+      <div class="cta">
+        <a class="btn primary" href="#electronics">Shop Electronics</a>
+        <a class="btn secondary" href="#deals">See Deals</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-slide" data-index="2">
+    <img src="https://images.unsplash.com/photo-1516383607781-913a19294fd1?q=80&w=1600&auto=format&fit=crop" alt="Back to school uniforms" loading="lazy" />
+    <div class="hero-content">
+      <h1>Back to School</h1>
+      <p>Uniforms that last. Sizes for all ages.</p>
+      <div class="cta">
+        <a class="btn primary" href="#uniforms">Shop Uniforms</a>
+        <a class="btn secondary" href="#guide">Sizing Guide</a>
+      </div>
+    </div>
+  </div>
+  <div class="slider-dots" role="tablist" aria-label="Hero slides">
+    <button class="dot active" aria-label="Slide 1" data-goto="0"></button>
+    <button class="dot" aria-label="Slide 2" data-goto="1"></button>
+    <button class="dot" aria-label="Slide 3" data-goto="2"></button>
+  </div>
+</section>
+
+<!-- PROMOS -->
+<div class="promo" aria-label="Trust and service highlights">
+  <div class="card">🚚 <div><strong>Fast Delivery</strong><div class="sub">Same/next-day in major towns</div></div></div>
+  <div class="card">🔒 <div><strong>Secure Checkout</strong><div class="sub">PCI-DSS compliant gateways</div></div></div>
+  <div class="card">💬 <div><strong>Live Support</strong><div class="sub">9am–9pm EAT, 7 days</div></div></div>
+  <div class="card">🔁 <div><strong>Easy Returns</strong><div class="sub">7-day return policy</div></div></div>
+</div>
+
+<!-- CATEGORY CONTAINERS -->
+<section class="section" id="men">
+  <h2>Men's Clothing</h2>
+  <div class="category-row">
+    <div class="tile big" onclick="redirectToCategory('men')">
+      <img src="https://images.unsplash.com/photo-1516826957135-700dedea698c?q=80&w=1200&auto=format&fit=crop" alt="Men's collection" loading="lazy">
+      <span class="label">Shop Men's</span>
+    </div>
+    <div class="tile" onclick="redirectToCategory('men-shoes')">
+      <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=800&auto=format&fit=crop" alt="Men's shoes" loading="lazy">
+      <span class="label">Shoes</span>
+    </div>
+    <div class="tile" onclick="redirectToCategory('men-tshirts')">
+      <img src="https://images.unsplash.com/photo-1520975930846-c4c0a1a2f66e?q=80&w=800&auto=format&fit=crop" alt="T-shirts" loading="lazy">
+      <span class="label">T-shirts</span>
+    </div>
+    <div class="tile" onclick="redirectToCategory('men-trousers')">
+      <img src="https://images.unsplash.com/photo-1592878904946-b3cd4f5f1b7a?q=80&w=800&auto=format&fit=crop" alt="Trousers" loading="lazy">
+      <span class="label">Trousers</span>
+    </div>
+    <div class="tile" onclick="redirectToCategory('men-coats')">
+      <img src="https://images.unsplash.com/photo-1548883354-7622d03aca29?q=80&w=800&auto=format&fit=crop" alt="Coats" loading="lazy">
+      <span class="label">Coats</span>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="women">
+  <h2>Women's Clothing</h2>
+  <div class="category-row">
+    <div class="tile big" onclick="redirectToCategory('women')">
+      <img src="https://images.unsplash.com/photo-1520974735194-5f1d2f51b741?q=80&w=1200&auto=format&fit=crop" alt="Women's collection" loading="lazy">
+      <span class="label">Shop Women's</span>
+    </div>
+    <div class="tile" onclick="redirectToCategory('women-dresses')">
+      <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=800&auto=format&fit=crop" alt="Dresses" loading="lazy">
+      <span class="label">Dresses</span>
+    </div>
+    <div class="tile" onclick="redirectToCategory('women-tops')">
+      <img src="https://images.unsplash.com/photo-1516822003754-cca485356ecb?q=80&w=800&auto=format&fit=crop" alt="Tops" loading="lazy">
+      <span class="label">Tops</span>
+    </div>
+    <div class="tile" onclick="redirectToCategory('women-bags')">
+      <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?q=80&w=800&auto=format&fit=crop" alt="Bags" loading="lazy">
+      <span class="label">Handbags</span>
+    </div>
+    <div class="tile" onclick="redirectToCategory('women-accessories')">
+      <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=800&auto=format&fit=crop" alt="Accessories" loading="lazy">
+      <span class="label">Accessories</span>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED / NEW / BEST SELLERS -->
+<section class="section" id="products">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+    <h2>Featured Products</h2>
+    <div>
+      <label for="sortSelect" class="sr-only">Sort</label>
+      <select id="sortSelect" class="pill" aria-label="Sort products">
+        <option value="featured">Featured</option>
+        <option value="price-asc">Price: Low to High</option>
+        <option value="price-desc">Price: High to Low</option>
+        <option value="rating">Top Rated</option>
+        <option value="new">New Arrivals</option>
+      </select>
+    </div>
+  </div>
+  <div id="productGrid" class="grid cols-4" role="list" aria-label="Product list"></div>
+</section>
+
+<section class="section" id="new">
+  <h2>New Arrivals</h2>
+  <div id="newGrid" class="grid cols-4"></div>
+</section>
+
+<section class="section" id="best">
+  <h2>Best Sellers</h2>
+  <div id="bestGrid" class="grid cols-4"></div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section" id="testimonials">
+  <h2>What Customers Say</h2>
+  <div class="accordion">
+    <details open>
+      <summary>⭐⭐⭐⭐⭐ "Quality is top-notch!" — Amina</summary>
+      <div class="content">I got my heels and a blazer; both fit perfectly and delivery was super fast!</div>
+    </details>
+    <details>
+      <summary>⭐⭐⭐⭐ "Smooth checkout" — Brian</summary>
+      <div class="content">Loved the checkout experience and the order tracking updates.</div>
+    </details>
+  </div>
+</section>
+
+<!-- BLOG PREVIEW -->
+<section class="section" id="blog">
+  <h2>From Our Blog</h2>
+  <div class="grid cols-4">
+    <article class="card product">
+      <div class="thumb"><img src="https://images.unsplash.com/photo-1456327102063-fb5054efe647?q=80&w=1200&auto=format&fit=crop" alt="Sustainable fashion tips" loading="lazy"></div>
+      <div class="meta">
+        <h3>Sustainable Fashion: 7 Easy Tips</h3>
+        <p class="sub">Learn how to build a timeless wardrobe with eco-friendly picks.</p>
+        <a class="btn secondary" href="#">Read More</a>
+      </div>
+    </article>
+    <article class="card product">
+      <div class="thumb"><img src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1200&auto=format&fit=crop" alt="Gadget buying guide" loading="lazy"></div>
+      <div class="meta">
+        <h3>2025 Gadget Buying Guide</h3>
+        <p class="sub">Everything to consider before your next upgrade.</p>
+        <a class="btn secondary" href="#">Read More</a>
+      </div>
+    </article>
+    <article class="card product">
+      <div class="thumb"><img src="https://images.unsplash.com/photo-1560347876-aeef00ee58a1?q=80&w=1200&auto=format&fit=crop" alt="Uniform sizing" loading="lazy"></div>
+      <div class="meta">
+        <h3>Uniform Sizing Guide</h3>
+        <p class="sub">Accurate measurements = comfortable school days.</p>
+        <a class="btn secondary" href="#">Read More</a>
+      </div>
+    </article>
+    <article class="card product">
+      <div class="thumb"><img src="https://images.unsplash.com/photo-1505685296765-3a2736de412f?q=80&w=1200&auto=format&fit=crop" alt="Style your sneakers" loading="lazy"></div>
+      <div class="meta">
+        <h3>How to Style Sneakers</h3>
+        <p class="sub">From casual to office-smart in minutes.</p>
+        <a class="btn secondary" href="#">Read More</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="section" id="newsletter">
+  <h2>Stay in the loop</h2>
+  <p class="sub">Get updates on new arrivals and exclusive offers.</p>
+  <form id="newsletterForm" class="search" onsubmit="subscribeNewsletter(event)">
+    <input type="email" id="newsletterEmail" placeholder="you@example.com" required aria-label="Email" />
+    <button class="btn primary" type="submit">Subscribe</button>
+  </form>
+  <p id="newsletterMsg" class="sub" role="status" aria-live="polite"></p>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq">
+  <h2>FAQs</h2>
+  <div class="accordion">
+    <details>
+      <summary>What payment options do you accept?</summary>
+      <div class="content">Cards, M-Pesa, bank transfer and more via secure gateways.</div>
+    </details>
+    <details>
+      <summary>How fast is delivery?</summary>
+      <div class="content">Same-day in Nairobi & Thika. 1–3 days countrywide.</div>
+    </details>
+    <details>
+      <summary>What is your return policy?</summary>
+      <div class="content">7 days for unused items in original packaging.</div>
+    </details>
+  </div>
+</section>
+
+  </main>  <!-- FOOTER -->  <footer>
+    <div class="container footer-grid">
+      <div>
+        <div class="logo" style="margin-bottom:6px">ShopVerse</div>
+        <p class="sub">Quality fashion, gadgets and uniforms at friendly prices. Secure checkout, fast delivery.</p>
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <span class="pill">SSL</span>
+          <span class="pill">PCI-DSS</span>
+          <span class="pill">Trusted Store</span>
+        </div>
+      </div>
+      <div>
+        <strong>Shop</strong>
+        <ul>
+          <li><a href="#men">Men</a></li>
+          <li><a href="#women">Women</a></li>
+          <li><a href="#electronics">Electronics</a></li>
+          <li><a href="#uniforms">Uniforms</a></li>
+        </ul>
+      </div>
+      <div>
+        <strong>Support</strong>
+        <ul>
+          <li><a href="#track" id="openTrack2">Order Tracking</a></li>
+          <li><a href="#returns">Returns & Refunds</a></li>
+          <li><a href="#shipping">Shipping Info</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <strong>Follow</strong>
+        <ul>
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">X</a></li>
+          <li><a href="#">YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footnote">© <span id="year"></span> ShopVerse. All rights reserved.</div>
+  </footer>  <!-- DRAWERS & MODALS -->  <div id="cartDrawer" class="drawer" role="dialog" aria-label="Shopping cart">
+    <div class="backdrop" onclick="toggleDrawer('cartDrawer',false)"></div>
+    <div class="panel">
+      <h3>Cart</h3>
+      <div id="cartItems"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
+        <strong>Total:</strong>
+        <strong id="cartTotal">KES 0</strong>
+      </div>
+      <div class="actions" style="margin-top:12px">
+        <button class="btn secondary" onclick="clearCart()">Clear</button>
+        <button class="btn primary" onclick="checkout()">Checkout</button>
+      </div>
+    </div>
+  </div>  <div id="wishlistDrawer" class="drawer" role="dialog" aria-label="Wishlist">
+    <div class="backdrop" onclick="toggleDrawer('wishlistDrawer',false)"></div>
+    <div class="panel">
+      <h3>Wishlist</h3>
+      <div id="wishlistItems"></div>
+    </div>
+  </div>  <div id="authModal" class="modal" role="dialog" aria-label="Login and registration">
+    <div class="dialog">
+      <button class="pill" style="float:right" onclick="toggleModal('authModal',false)">Close ✕</button>
+      <h3>Login / Register</h3>
+      <form id="authForm" onsubmit="authSubmit(event)">
+        <div class="search" style="margin-top:8px">
+          <input type="email" id="authEmail" placeholder="Email" required>
+        </div>
+        <div class="search" style="margin-top:8px">
+          <input type="password" id="authPass" placeholder="Password" required>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button class="btn primary" type="submit">Login</button>
+          <button class="btn secondary" type="button" onclick="registerAccount()">Register</button>
+        </div>
+        <p class="sub" id="authMsg" role="status" aria-live="polite"></p>
+      </form>
+      <div style="margin-top:10px">
+        <button class="pill" onclick="socialLogin('google')">Continue with Google</button>
+        <button class="pill" onclick="socialLogin('facebook')">Continue with Facebook</button>
+      </div>
+    </div>
+  </div>  <div id="trackModal" class="modal" role="dialog" aria-label="Order tracking">
+    <div class="dialog">
+      <button class="pill" style="float:right" onclick="toggleModal('trackModal',false)">Close ✕</button>
+      <h3>Track your order</h3>
+      <form onsubmit="trackOrder(event)">
+        <div class="search" style="margin-top:8px">
+          <input type="text" id="trackId" placeholder="Enter order number" required>
+        </div>
+        <button class="btn primary" type="submit" style="margin-top:8px">Track</button>
+        <p id="trackMsg" class="sub" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>  <!-- Cookie / Privacy notice -->  <div id="cookieBar" class="container" style="position:fixed;bottom:12px;left:50%;transform:translateX(-50%);max-width:1200px;display:none">
+    <div class="card" style="background:#0f1218;border:1px solid rgba(255,255,255,.1);padding:14px;border-radius:16px;display:flex;gap:10px;align-items:center;justify-content:space-between">
+      <div>
+        We use cookies for a better experience. See our <a href="#" style="text-decoration:underline">Privacy Policy</a>.
+      </div>
+      <div class="actions">
+        <button class="btn secondary" onclick="dismissCookie(false)">Decline</button>
+        <button class="btn primary" onclick="dismissCookie(true)">Accept</button>
+      </div>
+    </div>
+  </div>  <!-- LIVE CHAT (mock) --><button id="chatBtn" class="btn primary" style="position:fixed;right:16px;bottom:16px;z-index:60">Chat 💬</button>
+
+  <div id="chatWindow" class="modal" role="dialog" aria-label="Live chat">
+    <div class="dialog">
+      <button class="pill" style="float:right" onclick="toggleModal('chatWindow',false)">Close ✕</button>
+      <h3>Live Support</h3>
+      <div id="chatLog" style="background:#0b0c10;border:1px solid rgba(255,255,255,.08);height:200px;border-radius:12px;padding:10px;overflow:auto"></div>
+      <form onsubmit="chatSend(event)" class="search" style="margin-top:8px">
+        <input id="chatInput" placeholder="Type a message…" required>
+        <button class="btn secondary" type="submit">Send</button>
+      </form>
+    </div>
+  </div>  <script>
+    /* ------------------ UTILITIES / STATE ------------------ */
+    const state = {
+      products: [
+        {id:'p1', title:'Classic Jeans', cat:'men', price:1999, oldPrice:2499, rating:4.6, image:'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=900&auto=format&fit=crop', tags:['jeans','men']},
+        {id:'p2', title:'White Tee', cat:'men', price:799, rating:4.3, image:'https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=900&auto=format&fit=crop', tags:['tshirt','men'], new:true},
+        {id:'p3', title:'Leather Sneakers', cat:'men', price:3499, rating:4.8, image:'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=900&auto=format&fit=crop', tags:['shoes','sneakers'], best:true},
+        {id:'p4', title:'Women Summer Dress', cat:'women', price:2799, rating:4.7, image:'https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=900&auto=format&fit=crop', tags:['dress','women'], new:true},
+        {id:'p5', title:'Handbag Minimal', cat:'women', price:3199, rating:4.5, image:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?q=80&w=900&auto=format&fit=crop', tags:['bag','women']},
+        {id:'p6', title:'School Shirt', cat:'uniforms', price:999, rating:4.2, image:'https://images.unsplash.com/photo-1583394293214-28ded15ee548?q=80&w=900&auto=format&fit=crop', tags:['uniform','shirt']},
+        {id:'p7', title:'School Sweater', cat:'uniforms', price:1299, rating:4.1, image:'https://images.unsplash.com/photo-1516383607781-913a19294fd1?q=80&w=900&auto=format&fit=crop', tags:['uniform','sweater'], best:true},
+        {id:'p8', title:'Wireless Earbuds', cat:'electronics', price:4499, rating:4.4, image:'https://images.unsplash.com/photo-1585386959984-a415522316a5?q=80&w=900&auto=format&fit=crop', tags:['earbuds','gadgets'], new:true},
+        {id:'p9', title:'Smartphone X', cat:'electronics', price:49999, rating:4.9, image:'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=900&auto=format&fit=crop', tags:['phone'], best:true}
+      ],
+      cart: JSON.parse(localStorage.getItem('cart')||'[]'),
+      wishlist: JSON.parse(localStorage.getItem('wishlist')||'[]'),
+      currency:'KES', lang:'EN'
+    };
+
+    const fmt = (n)=> new Intl.NumberFormat('en-KE',{style:'currency',currency: state.currency||'KES'}).format(n);
+
+    function save(){
+      localStorage.setItem('cart', JSON.stringify(state.cart));
+      localStorage.setItem('wishlist', JSON.stringify(state.wishlist));
+    }
+
+    /* ------------------ NAV / GLOBAL ------------------ */
+    document.getElementById('openCart').onclick=()=>toggleDrawer('cartDrawer',true);
+    document.getElementById('openWishlist').onclick=()=>toggleDrawer('wishlistDrawer',true);
+    document.getElementById('openLogin').onclick=()=>toggleModal('authModal',true);
+    document.getElementById('openTrack').onclick=()=>toggleModal('trackModal',true);
+    document.getElementById('openTrack2').onclick=()=>toggleModal('trackModal',true);
+    document.getElementById('chatBtn').onclick=()=>toggleModal('chatWindow',true);
+
+    function toggleDrawer(id,open){document.getElementById(id).classList.toggle('open',open);if(open)renderCart(),renderWishlist();}
+    function toggleModal(id,open){document.getElementById(id).classList.toggle('open',open)}
+
+    document.getElementById('year').textContent=new Date().getFullYear();
+
+    // Cookie bar
+    if(!localStorage.getItem('cookieConsent')){document.getElementById('cookieBar').style.display='block'}
+    function dismissCookie(ok){localStorage.setItem('cookieConsent', ok?'yes':'no');document.getElementById('cookieBar').style.display='none'}
+
+    // Language & currency mock toggles
+    document.getElementById('langToggle').onclick=()=>{state.lang = state.lang==='EN'?'SW':'EN';event.target.textContent = state.lang;}
+    document.getElementById('curToggle').onclick=()=>{state.currency = state.currency==='KES'?'USD':'KES';event.target.textContent = state.currency;renderAll()}
+
+    // Redirect helper (kept from your snippet)
+    function redirectToCategory(slug){ window.location.href = 'index_v.html?category='+encodeURIComponent(slug); }
+
+    /* ------------------ HERO SLIDER ------------------ */
+    const slides = [...document.querySelectorAll('.hero-slide')];
+    const dots = [...document.querySelectorAll('.dot')];
+    let idx=0, timer=null;
+    function show(i){ idx=i; slides.forEach((s,n)=>s.classList.toggle('active', n===i)); dots.forEach((d,n)=>d.classList.toggle('active', n===i)); }
+    function next(){ show((idx+1)%slides.length); }
+    dots.forEach(d=>d.addEventListener('click', e=> show(parseInt(e.target.dataset.goto))));
+    timer=setInterval(next, 5500);
+
+    /* ------------------ PRODUCTS RENDER ------------------ */
+    const productGrid = document.getElementById('productGrid');
+    const newGrid = document.getElementById('newGrid');
+    const bestGrid = document.getElementById('bestGrid');
+
+    function star(r){ const full = Math.round(r); return '★'.repeat(Math.min(full,5)) + '☆'.repeat(5-Math.min(full,5)); }
+
+    function productCard(p){
+      return `
+      <article class="card product" role="listitem" aria-label="${p.title}">
+        <div class="thumb">
+          <button class="pill" style="position:absolute;top:8px;right:8px" aria-label="Add to wishlist" onclick="addToWishlist('${p.id}')">❤</button>
+          <img src="${p.image}" alt="${p.title}" loading="lazy" />
+        </div>
+        <div class="meta">
+          <h3 style="margin:0">${p.title}</h3>
+          <div class="rating" aria-label="Rating ${p.rating} out of 5">${star(p.rating)} <span style="color:var(--sub)">(${p.rating.toFixed(1)})</span></div>
+          <div class="price">
+            ${p.oldPrice?`<span class="old">${fmt(p.oldPrice)}</span>`:''}
+            <strong>${fmt(p.price)}</strong>
+          </div>
+          <div class="actions">
+            <button class="btn primary" onclick="addToCart('${p.id}')">Add to Cart</button>
+            <button class="btn secondary" onclick="quickView('${p.id}')">Quick View</button>
+          </div>
+        </div>
+      </article>`
+    }
+
+    function renderAll(){
+      // sort
+      const sort = document.getElementById('sortSelect').value;
+      let items = [...state.products];
+      if(sort==='price-asc') items.sort((a,b)=>a.price-b.price);
+      if(sort==='price-desc') items.sort((a,b)=>b.price-a.price);
+      if(sort==='rating') items.sort((a,b)=>b.rating-a.rating);
+      if(sort==='new') items.sort((a,b)=> (b.new?1:0)-(a.new?1:0));
+      productGrid.innerHTML = items.map(productCard).join('');
+      newGrid.innerHTML = state.products.filter(p=>p.new).map(productCard).join('');
+      bestGrid.innerHTML = state.products.filter(p=>p.best).map(productCard).join('');
+      document.getElementById('cartCount').textContent = state.cart.reduce((s,i)=>s+i.qty,0);
+      document.getElementById('wishCount').textContent = state.wishlist.length;
+      renderCart(); renderWishlist();
+    }
+
+    document.getElementById('sortSelect').addEventListener('change', renderAll);
+
+    /* ------------------ CART / WISHLIST ------------------ */
+    function addToCart(id){
+      const p = state.products.find(x=>x.id===id);
+      const ex = state.cart.find(x=>x.id===id);
+      if(ex) ex.qty++; else state.cart.push({id,qty:1});
+      save();
+      renderAll();
+      toggleDrawer('cartDrawer', true);
+    }
+
+    function removeFromCart(id){ state.cart = state.cart.filter(x=>x.id!==id); save(); renderAll(); }
+    function changeQty(id,delta){ const it = state.cart.find(x=>x.id===id); if(!it) return; it.qty=Math.max(1, it.qty+delta); save(); renderAll(); }
+    function clearCart(){ state.cart=[]; save(); renderAll(); }
+
+    function renderCart(){
+      const wrap = document.getElementById('cartItems');
+      if(!wrap) return;
+      if(state.cart.length===0){ wrap.innerHTML='<p class="sub">Your cart is empty.</p>'; document.getElementById('cartTotal').textContent = fmt(0); return; }
+      wrap.innerHTML = state.cart.map(it=>{
+        const p = state.products.find(x=>x.id===it.id);
+        return `<div style="display:grid;grid-template-columns:64px 1fr auto;gap:10px;align-items:center;border-bottom:1px solid rgba(255,255,255,.06);padding:10px 0">
+          <img src="${p.image}" alt="${p.title}" width="64" height="64" style="border-radius:10px;object-fit:cover" />
+          <div>
+            <strong>${p.title}</strong>
+            <div class="sub">${fmt(p.price)} • Qty: ${it.qty}</div>
+            <div style="display:flex;gap:6px;margin-top:6px">
+              <button class="pill" onclick="changeQty('${p.id}',-1)">−</button>
+              <button class="pill" onclick="changeQty('${p.id}',1)">+</button>
+              <button class="pill" onclick="removeFromCart('${p.id}')">Remove</button>
+            </div>
+          </div>
+          <div><strong>${fmt(p.price*it.qty)}</strong></div>
+        </div>`
+      }).join('');
+      const total = state.cart.reduce((s,it)=>{const p=state.products.find(x=>x.id===it.id);return s + p.price*it.qty},0);
+      document.getElementById('cartTotal').textContent = fmt(total);
+    }
+
+    function addToWishlist(id){ if(!state.wishlist.includes(id)) state.wishlist.push(id); save(); renderAll(); toggleDrawer('wishlistDrawer', true); }
+    function removeFromWishlist(id){ state.wishlist = state.wishlist.filter(x=>x!==id); save(); renderAll(); }
+    function renderWishlist(){
+      const wrap = document.getElementById('wishlistItems'); if(!wrap) return;
+      if(state.wishlist.length===0){ wrap.innerHTML='<p class="sub">No items yet.</p>'; return; }
+      wrap.innerHTML = state.wishlist.map(id=>{
+        const p = state.products.find(x=>x.id===id);
+        return `<div style="display:grid;grid-template-columns:64px 1fr auto;gap:10px;align-items:center;border-bottom:1px solid rgba(255,255,255,.06);padding:10px 0">
+          <img src="${p.image}" width="64" height="64" style="border-radius:10px;object-fit:cover" alt="${p.title}" />
+          <div><strong>${p.title}</strong><div class="sub">${fmt(p.price)}</div></div>
+          <div style="display:flex;gap:6px">
+            <button class="pill" onclick="addToCart('${p.id}')">Add to Cart</button>
+            <button class="pill" onclick="removeFromWishlist('${p.id}')">Remove</button>
+          </div>
+        </div>`
+      }).join('');
+    }
+
+    function checkout(){
+      alert('Checkout: redirecting to secure gateway (mock)');
+    }
+
+    /* ------------------ QUICK VIEW ------------------ */
+    function quickView(id){
+      const p = state.products.find(x=>x.id===id);
+      const mId = 'qv';
+      let m = document.getElementById(mId);
+      if(!m){ m = document.createElement('div'); m.id=mId; m.className='modal'; document.body.appendChild(m); }
+      m.innerHTML = `<div class="dialog">
+        <button class="pill" style="float:right" onclick="toggleModal('qv',false)">Close ✕</button>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:center">
+          <img src="${p.image}" alt="${p.title}" style="border-radius:12px" />
+          <div>
+            <h3>${p.title}</h3>
+            <div class="rating">${star(p.rating)} <span class="sub">(${p.rating.toFixed(1)})</span></div>
+            <p class="sub">Category: ${p.cat}</p>
+            <div class="price"><strong>${fmt(p.price)}</strong></div>
+            <div class="actions" style="margin-top:10px">
+              <button class="btn primary" onclick="addToCart('${p.id}')">Add to Cart</button>
+              <button class="btn secondary" onclick="addToWishlist('${p.id}')">Wishlist</button>
+            </div>
+          </div>
+        </div>
+      </div>`;
+      toggleModal(mId,true);
+    }
+
+    /* ------------------ SEARCH / AUTOCOMPLETE ------------------ */
+    const sInput = document.getElementById('searchInput');
+    const sRes = document.getElementById('searchResults');
+    sInput.addEventListener('input', ()=>{
+      const q = sInput.value.trim().toLowerCase();
+      if(!q){ sRes.style.display='none'; return; }
+      const matches = state.products.filter(p=> p.title.toLowerCase().includes(q) || p.tags.some(t=>t.includes(q)) ).slice(0,8);
+      sRes.innerHTML = matches.map(m=>`<a href="#" onclick="quickView('${m.id}')">${m.title}<span>${fmt(m.price)}</span></a>`).join('');
+      sRes.style.display = matches.length? 'block':'none';
+    });
+    document.addEventListener('click', (e)=>{ if(!sRes.contains(e.target) && e.target!==sInput) sRes.style.display='none'; });
+
+    /* ------------------ NEWSLETTER ------------------ */
+    function subscribeNewsletter(e){ e.preventDefault(); const email = document.getElementById('newsletterEmail').value; localStorage.setItem('newsletter', email); document.getElementById('newsletterMsg').textContent='Thanks! Please check your inbox to confirm.'; e.target.reset(); }
+
+    /* ------------------ AUTH (mock) ------------------ */
+    function authSubmit(e){ e.preventDefault(); document.getElementById('authMsg').textContent='Logged in (mock). Welcome!'; }
+    function registerAccount(){ document.getElementById('authMsg').textContent='Account created (mock). You can now log in.'; }
+    function socialLogin(p){ document.getElementById('authMsg').textContent='Continuing with '+p+' (mock)…'; }
+
+    /* ------------------ ORDER TRACKING (mock) ------------------ */
+    function trackOrder(e){ e.preventDefault(); const id = document.getElementById('trackId').value.trim(); document.getElementById('trackMsg').textContent = `Order ${id}: Out for delivery · ETA today 5–7pm`; }
+
+    /* ------------------ LIVE CHAT (mock) ------------------ */
+    function chatSend(e){ e.preventDefault(); const i=document.getElementById('chatInput'); const log=document.getElementById('chatLog'); const msg=i.value; const me=`<div><strong>You:</strong> ${msg}</div>`; const bot=`<div><strong>Agent:</strong> Thanks! We'll get right back to you.</div>`; log.insertAdjacentHTML('beforeend', me); setTimeout(()=>{log.insertAdjacentHTML('beforeend', bot); log.scrollTop=log.scrollHeight;}, 500); i.value=''; }
+
+    // Initial render
+    renderAll();
+    if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/service-worker.js")
+    .then(() => console.log("✅ Service Worker Registered"))
+    .catch(err => console.error("SW registration failed:", err));
+}
+  </script></body>
+</html>
