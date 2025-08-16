@@ -1,23 +1,86 @@
 {
   "name": "Shopverse",
   "short_name": "Shopverse",
+  "description": "Shopverse is your all-in-one shopping app to browse, discover, and buy products easily with exclusive offers and a seamless experience.",
   "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#000000",
   "orientation": "portrait",
+  "dir": "auto",
+  "lang": "en",
+
+  "categories": ["shopping", "ecommerce", "lifestyle"],
+
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "/icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "icon-512.png",
+      "src": "/icons/icon-256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
   ],
-  "dir": "auto",
-  "lang": "en"
+
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+
+  "screenshots": [
+    {
+      "src": "/screenshots/home.png",
+      "sizes": "720x1280",
+      "type": "image/png",
+      "label": "Home Page"
+    },
+    {
+      "src": "/screenshots/product.png",
+      "sizes": "720x1280",
+      "type": "image/png",
+      "label": "Product Page"
+    },
+    {
+      "src": "/screenshots/cart.png",
+      "sizes": "720x1280",
+      "type": "image/png",
+      "label": "Shopping Cart"
+    }
+  ],
+
+  "shortcuts": [
+    {
+      "name": "Go to Cart",
+      "short_name": "Cart",
+      "description": "Quickly open your shopping cart",
+      "url": "/cart.html",
+      "icons": [
+        {
+          "src": "/icons/cart-icon.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "View Offers",
+      "short_name": "Offers",
+      "description": "See the latest offers",
+      "url": "/offers.html",
+      "icons": [
+        {
+          "src": "/icons/offers-icon.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
 }
