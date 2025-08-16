@@ -15,9 +15,9 @@ const FILES_TO_CACHE = [
   "/img/headphones1.jpg",
 
   // ✅ Add other static images
-  "/img/icon/logo.png",
-  "/img/icons/icon-192.png",
-  "/img/icons/icon-512.png"
+  "/logo.png",
+  "/icon-192.png",
+  "icon-512.png"
 ];
 
 // Install Service Worker
