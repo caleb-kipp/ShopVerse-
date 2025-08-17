@@ -512,15 +512,7 @@ footer{margin-top:36px;border-top:1px solid rgba(255,255,255,.08);background:#0f
     </div>
   </div>  <script>
     
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker
-        .register("/service-worker.js")
-        .then((reg) => console.log("Service Worker registered:", reg))
-        .catch((err) => console.error("Service Worker registration failed:", err));
-    });
-  }
-
+  
 /* jshint esversion: 6 */
 
 /* ------------------ UTILITIES / STATE ------------------ */
@@ -857,6 +849,16 @@ window.registerAccount = registerAccount;
 window.socialLogin = socialLogin;
 window.trackOrder = trackOrder;
 window.chatSend = chatSend;
+
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker
+        .register("/service-worker.js")
+        .then((reg) => console.log("✅ Service Worker registered:", reg.scope))
+        .catch((err) => console.error("❌ Service Worker failed:", err));
+    });
+  }
+
 
 
   </script></body>
