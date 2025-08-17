@@ -9,7 +9,6 @@
   <meta name="description" content="ShopVerse: Discover trending fashion, gadgets, school uniforms and more. Fast, secure checkout with wishlists, reviews, and order tracking.">
   <meta name="keywords" content="ecommerce, fashion, gadgets, men, women, uniforms, shop online, kenya">
     <script src="/sw-register.js"></script>
-    <script src="/sw-register.js"></script>
 <script src="manifest.js"></script>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#000000">
@@ -513,18 +512,15 @@ footer{margin-top:36px;border-top:1px solid rgba(255,255,255,.08);background:#0f
     </div>
   </div>  <script>
     
-        // Register service worker
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function () {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(function (registration) {
-        console.log('✅ Service Worker registered with scope:', registration.scope);
-      })
-      .catch(function (error) {
-        console.error('❌ Service Worker registration failed:', error);
-      });
-  });
-}
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker
+        .register("/service-worker.js")
+        .then((reg) => console.log("Service Worker registered:", reg))
+        .catch((err) => console.error("Service Worker registration failed:", err));
+    });
+  }
+
 /* jshint esversion: 6 */
 
 /* ------------------ UTILITIES / STATE ------------------ */

@@ -1,23 +1,80 @@
 {
-  "name": "Shopverse",
-  "short_name": "Shopverse",
+  "name": "ShopVerse",
+  "short_name": "ShopVerse",
+  "id": "com.shopverse.pwa",
   "start_url": "/index.html",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#000000",
   "orientation": "portrait",
+  "dir": "auto",
+  "lang": "en",
+  "description": "ShopVerse is your one-stop online shop for fashion, electronics, and home essentials with fast, secure checkout.",
   "icons": [
     {
       "src": "icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ],
-  "dir": "auto",
-  "lang": "en"
+  "launch_handler": {
+    "client_mode": "focus-existing"
+  },
+  "screenshots": [
+    {
+      "src": "screenshots/home.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "label": "Home Screen"
+    },
+    {
+      "src": "screenshots/product.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "label": "Product Page"
+    },
+    {
+      "src": "screenshots/cart.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "label": "Shopping Cart"
+    }
+  ],
+  "categories": ["shopping", "lifestyle", "ecommerce"],
+  "shortcuts": [
+    {
+      "name": "Shop Electronics",
+      "short_name": "Electronics",
+      "description": "Browse the latest electronics",
+      "url": "/electronics",
+      "icons": [
+        {
+          "src": "icons/electronics.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Shop Fashion",
+      "short_name": "Fashion",
+      "description": "Discover trendy fashion items",
+      "url": "/fashion",
+      "icons": [
+        {
+          "src": "icons/fashion.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
 }
