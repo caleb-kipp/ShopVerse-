@@ -11,14 +11,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
       <script src="index.js"></script>
           <script src="dynamicproduct.js"></script>  
-          <script src="products.js"></script>
-          <script src="products14.js"></script>
+          <script src="produc.js"></script>
+          <script src="produc.js"></script>
 <script src="product-bridge.js"></script>
  <link rel="stylesheet" href="product2.css" />
 <script src="indexproductmodal.js"></script>
 <script src="product-carousel.js"></script>
  <script src="product-view1.js"></script>
-  <script src="part1.js"></script>
+  <script src="button.js"></script>
     <script src="script.js"></script>
      <script src="product-view.js"></script>
       <script src="product-view0.js"></script>
@@ -82,7 +82,7 @@ nav a{padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.06
 
 /* carousels */
 .row{display:flex;gap:14px;overflow:auto;scroll-snap-type:x mandatory;padding-bottom:10px}
-.row .p-card{flex:0 0 350px;scroll-snap-align:start;background:#0f1623;border:1px solid rgba(255,255,255,.06);border-radius:14px;overflow:hidden}
+.row .p-card{flex:0 0 220px;scroll-snap-align:start;background:#0f1623;border:1px solid rgba(255,255,255,.06);border-radius:14px;overflow:hidden}
 .row .p-card img{aspect-ratio:4/3;object-fit:cover}
 .row .p-card .p-meta{padding:10px}
 .carousel-ctl{display:flex;gap:10px}
@@ -136,8 +136,70 @@ footer a{color:#cbd5e1}
   .grid.mw{grid-template-columns:1fr 1fr}
   footer .cols{grid-template-columns:1fr 1fr}
 }
+/* Product price */
+.price {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
 
+/* Card text */
+.p-meta h5 {
+  margin: 0 0 4px;
+  font-size: 16px;
+}
 
+.p-meta p {
+  margin: 0;
+}
+
+.btn {
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+/* Wishlist & cart buttons */
+.btn-outline-secondary {
+  color: #ff6b81;
+  border-color: #ff6b81;
+}
+.btn-outline-secondary:hover {
+  background: #ff6b81;
+  color: #fff;
+}
+/* Product price */
+.price {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+/* Card text */
+.p-meta h5 {
+  margin: 0 0 4px;
+  font-size: 16px;
+}
+
+.p-meta p {
+  margin: 0;
+}
+
+.btn {
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+/* Wishlist & cart buttons */
+.btn-outline-secondary {
+  color: #ff6b81;
+  border-color: #ff6b81;
+}
+.btn-outline-secondary:hover {
+  background: #ff6b81;
+  color: #fff;
+}
+    /* Blog teasers */
+    .grid.blog{grid-template-columns:repeat(3,1fr);gap:16px}
   </style>
 </head>
 <body>
@@ -167,16 +229,19 @@ footer a{color:#cbd5e1}
           <button class="icon-btn" id="openAuth" aria-label="Open login/register"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="7" r="4" stroke="white"/><path d="M4 21a8 8 0 0116 0" stroke="white"/></svg></button>
         </div>
       </div>
-      <nav aria-label="Primary categories">
-        <a href="#">New Arrivals</a>
-        <a href="#">Best Sellers</a>
-        <a href="#">Men</a>
-        <a href="#">Women</a>
+     
+     <nav aria-label="Primary categories">
+        <a href="#rowNew" id=
+        "openRow">New Arrivals</a>
+        <a href="#rowBest">Best Sellers</a>
+        <a href="#menHeading">Men</a>
+        <a href="#womenHeading">Women</a>
         <a href="#">Accessories</a>
         <a href="#">Limited</a>
-        <a href="#">Blog</a>
+        <a href="blog.html">Blog</a>
         <a href="#helpModal" id="openHelp">Help Center</a>
       </nav>
+    </div>
     </div>
   </header>  <main class="container" id="main">
     <!-- HERO: big left image (50%), four right cards (2x2) (50%), looping accessible slider -->
@@ -277,20 +342,17 @@ footer a{color:#cbd5e1}
     <div id="rowLiked" class="row" aria-label="Most Liked carousel"></div>
   </div>
 </section>
-<div style="display:grid;gap:8px;margin-top:18px">
-  <div style="display:flex;align-items:center;justify-content:space-between">
-    <h2>Store Products</h2>
-    <div class="carousel-ctl">
-      <button class="btn btn-ghost" data-scroll="prev" data-target="#productGrid">◀</button>
-      <button class="btn btn-ghost" data-scroll="next" data-target="#productGrid">▶</button>
-    </div>
+<!-- ================= PRODUCTS SECTION ================= -->
+<section id="shop" class="section">
+  <div class="container">
+    <h2 class="text-center">Shop Our Collection</h2>
+    <div id="productSections"></div>
   </div>
-  <div id="productGrid" class="row" aria-label="Product carousel"></div>
-</div>
+</section>
 
-<script src="product.js"></script>
-<script src="indexproductmodal3.js"></script>
-<!-- Promos / Testimonials / Blog teasers -->
+<script src="produc.js"></script>
+<script src="index.js"></script>
+
 <section class="section" aria-label="Promos, testimonials, blog">
   <div class="grid" style="grid-template-columns:2fr 1fr 1fr;gap:16px">
     <div class="card" style="padding:18px">
@@ -318,17 +380,38 @@ footer a{color:#cbd5e1}
       <blockquote class="helper">“Love the eco materials and the fit.” — <strong>Sam</strong></blockquote>
       <blockquote class="helper">“Checkout was easy, support was helpful.” — <strong>Kim</strong></blockquote>
     </div>
-    <div class="card" style="padding:18px">
-      <h3>From the Blog</h3>
-      <ul>
-        <li><a href="#">How to build a minimalist wardrobe</a></li>
-        <li><a href="#">Caring for organic cotton</a></li>
-        <li><a href="#">Sneaker trends this fall</a></li>
-      </ul>
-    </div>
+  
+</section>
+<!-- Blog teasers -->
+<section id="blog" class="section" aria-labelledby="blogTitle">
+  <h2 id="blogTitle">From the blog</h2>
+  <div class="grid blog">
+    <article class="card">
+      <img src="https://picsum.photos/800/500?random=41" alt="Sustainability practices" loading="lazy" />
+      <div style="padding:12px">
+        <h3>5 ways we’re going greener</h3>
+        <p class="sub">Sustainable packaging, renewable energy, and more.</p>
+        <a class="btn ghost" href="blog.html">Read more</a>
+      </div>
+    </article>
+    <article class="card">
+      <img src="https://picsum.photos/800/500?random=42" alt="Size guide" loading="lazy" />
+      <div style="padding:12px">
+        <h3>Ultimate size & fit guide</h3>
+        <p class="sub">Nail your fit with our quick sizing tips.</p>
+        <a class="btn ghost" href="blog.html">Read more</a>
+      </div>
+    </article>
+    <article class="card">
+      <img src="https://picsum.photos/800/500?random=43" alt="Care tips" loading="lazy" />
+      <div style="padding:12px">
+        <h3>Care tips to make gear last</h3>
+        <p class="sub">Easy wins to extend product life cycles.</p>
+        <a class="btn ghost" href="blog.html">Read more</a>
+      </div>
+    </article>
   </div>
 </section>
-
 <!-- Payment badges / SEO note / accessibility touches visible -->
 <section class="section" aria-label="Payment methods">
   <h2>Pay Your Way</h2>
@@ -408,191 +491,16 @@ footer a{color:#cbd5e1}
  
 
 
-  <!-- CART / WISHLIST / AUTH / HELP / RETURNS / TRACKING MODALS --> <!-- CART MODAL -->
-<div class="modal" id="cartModal" role="dialog" aria-label="Shopping Cart" aria-modal="true">
-  <div class="box cart-container">
-    
-    <!-- ================= HEADER ================= -->
-    <div class="cart-header flex justify-between items-center">
-      <h3>Your Cart</h3>
-      <button class="btn btn-ghost" id="closeCartBtn" aria-label="Close Cart">&times;</button>
-    </div>
-    
-    <!-- ================= CART ITEMS ================= -->
-    <div id="cartItems" class="cart-items panel">
-      <!-- Each cart item -->
-      <div class="cart-item" data-id="">
-        <img src="" alt="Product Image" class="cart-item-img" />
-        <div class="item-info">
-          <h5 class="cart-item-title">Product Title</h5>
-          <p class="cart-item-description">Product description goes here...</p>
-          <p class="cart-item-specs">Specs: Size, Color, Material...</p>
-          <div class="cart-item-rating">⭐⭐⭐⭐☆ (45 reviews)</div>
-          <div class="cart-item-price-details">
-            <span class="unit-price">$0.00</span>
-            <input type="number" min="1" value="1" class="cart-item-qty" aria-label="Quantity Selector" />
-            <span class="item-total-price">$0.00</span>
-          </div>
-          <div class="cart-item-actions">
-            <button class="btn btn-ghost remove-item-btn">Remove</button>
-            <button class="btn btn-secondary customize-item-btn">Customize</button>
-          </div>
-          <textarea class="cart-item-note" placeholder="Add a note (e.g., gift message)"></textarea>
-        </div>
+  <!-- CART / WISHLIST / AUTH / HELP / RETURNS / TRACKING MODALS -->  <div class="modal" id="cartModal" role="dialog" aria-label="Cart" aria-modal="true">
+    <div class="box">
+      <div style="display:flex;justify-content:space-between;align-items:center"><h3>Your Cart</h3><button class="btn btn-ghost" data-close="#cartModal">Close</button></div>
+      <div id="cartItems" class="panel"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+        <div class="helper">Secure checkout placeholder – multiple payment methods supported.</div>
+        <button class="btn btn-primary" id="checkoutBtn">Checkout</button>
       </div>
     </div>
-
-    <!-- Empty Cart Message -->
-    <div id="emptyCartMessage" class="empty-cart-message hidden">
-      <p>Your cart is currently empty.</p>
-    </div>
-
-    <!-- ================= PROMO CODES & DISCOUNTS ================= -->
-    <div class="promo-code">
-      <input type="text" id="promoCode" placeholder="Enter Promo Code" />
-      <button class="btn btn-secondary" id="applyPromoBtn">Apply</button>
-      <p id="promoMessage"></p>
-    </div>
-
-    <!-- ================= GIFT OPTIONS ================= -->
-    <div class="gift-options">
-      <label><input type="checkbox" id="giftWrap"> Add Gift Wrapping (+$5)</label>
-      <textarea id="giftMessage" placeholder="Add a personal message"></textarea>
-      <label><input type="checkbox" id="giftCard"> Redeem Gift Card</label>
-      <label><input type="checkbox" id="rewardPoints"> Redeem Reward Points</label>
-    </div>
-
-    <!-- ================= CART SUMMARY ================= -->
-    <div class="cart-summary">
-      <div class="summary-item"><span>Items:</span><span id="cartItemCount">0</span></div>
-      <div class="summary-item"><span>Subtotal:</span><span id="subtotal">$0.00</span></div>
-      <div class="summary-item"><span>Discount:</span><span id="discount">$0.00</span></div>
-      <div class="summary-item"><span>Tax:</span><span id="tax">$0.00</span></div>
-      <div class="summary-item"><span>Shipping:</span><span id="shipping">$0.00</span></div>
-      <div class="summary-item"><span>Estimated Delivery:</span><span id="deliveryEstimate">--</span></div>
-      <div class="summary-item total"><span>Total:</span><span id="total">$0.00</span></div>
-    </div>
-
-    <!-- ================= ACTIONS ================= -->
-    <div class="cart-actions">
-      <button class="btn btn-primary" id="checkoutBtn">Checkout</button>
-      <button class="btn btn-ghost" id="updateCartBtn">Update Cart</button>
-    </div>
-
-    <!-- ================= PRODUCT SUGGESTIONS ================= -->
-    <div class="cart-recommendations">
-      <h4>Recommended Products</h4>
-      <div id="recommendedProducts" class="row"></div>
-    </div>
-
-    <div class="cart-suggestions">
-      <h4>You Might Also Like</h4>
-      <div id="suggestedProducts" class="row"></div>
-    </div>
-
-    <!-- ================= BUNDLES, UPSELLS & CROSS-SELLS ================= -->
-    <div class="cart-bundles">
-      <h4>Bundles & Packages</h4>
-      <div id="bundleProducts"></div>
-    </div>
-
-    <div class="cart-upsells">
-      <h4>Upgrade Your Cart</h4>
-      <div id="upsellProducts"></div>
-    </div>
-
-    <div class="cart-cross-sells">
-      <h4>Frequently Bought Together</h4>
-      <div id="crossSellProducts"></div>
-    </div>
-
-    <!-- ================= WISHLIST & COMPARE ================= -->
-    <div class="wishlist-compare">
-      <button class="btn btn-secondary" id="wishlistBtn">Save to Wishlist</button>
-      <button class="btn btn-secondary" id="compareBtn">Compare Products</button>
-    </div>
-
-    <!-- ================= REVIEWS & SPECIFICATIONS ================= -->
-    <div class="product-reviews">
-      <h4>Product Reviews</h4>
-      <div id="reviews"></div>
-    </div>
-
-    <div class="product-specs">
-      <h4>Specifications</h4>
-      <div id="specifications"></div>
-    </div>
-
-    <!-- ================= MEDIA (IMAGES, VIDEOS, 360 VIEW) ================= -->
-    <div class="product-media">
-      <h4>Product Gallery</h4>
-      <div id="imageGallery"></div>
-      <div id="productVideo"></div>
-      <div id="product360"></div>
-    </div>
-
-    <!-- ================= SECURITY & TRUST ================= -->
-    <div class="cart-security">
-      <h4>Secure Checkout</h4>
-      <div class="trust-badges">
-        <img src="ssl-badge.png" alt="SSL Secured" />
-        <img src="trust-badge.png" alt="Trusted Checkout" />
-      </div>
-      <p>Your data is encrypted and protected.</p>
-    </div>
-
-    <!-- ================= CHECKOUT OPTIONS ================= -->
-    <div class="checkout-options">
-      <h4>Payment Options</h4>
-      <div id="paymentMethods">
-        <label><input type="radio" name="payment" value="card"> Credit/Debit Card</label>
-        <label><input type="radio" name="payment" value="paypal"> PayPal</label>
-        <label><input type="radio" name="payment" value="stripe"> Stripe</label>
-      </div>
-      <h4>Shipping Options</h4>
-      <div id="shippingMethods">
-        <label><input type="radio" name="shipping" value="standard"> Standard</label>
-        <label><input type="radio" name="shipping" value="express"> Express</label>
-      </div>
-    </div>
-
-    <!-- ================= ORDER CONFIRMATION & TRACKING ================= -->
-    <div class="order-tracking hidden" id="orderTracking">
-      <h4>Order Summary</h4>
-      <p id="orderSummary"></p>
-      <p id="paymentConfirmation"></p>
-      <p id="shippingInfo"></p>
-      <div id="trackingInfo"></div>
-      <button class="btn btn-ghost" id="printOrderBtn">Print Order</button>
-    </div>
-
-    <!-- ================= POLICIES, SUPPORT & FEEDBACK ================= -->
-    <div class="cart-policies">
-      <h4>Policies</h4>
-      <p id="returnPolicy">30-day return policy</p>
-      <p id="refundPolicy">Refund within 7 business days</p>
-      <p id="exchangePolicy">Easy exchanges available</p>
-    </div>
-
-    <div class="customer-support">
-      <h4>Need Help?</h4>
-      <p>Contact us: <a href="mailto:support@example.com">support@example.com</a></p>
-      <p>FAQs | Live Chat | Call Center</p>
-    </div>
-
-    <div class="customer-feedback">
-      <h4>Feedback</h4>
-      <form id="feedbackForm">
-        <textarea placeholder="Share your experience..."></textarea>
-        <button class="btn btn-secondary" type="submit">Submit</button>
-      </form>
-    </div>
-
-  </div>
-
-  <!-- ================= OVERLAY ================= -->
-  <div class="modal-overlay" id="cartOverlay"></div>
-</div>  <div class="modal" id="wishlistModal" role="dialog" aria-label="Wishlist" aria-modal="true">
+  </div>  <div class="modal" id="wishlistModal" role="dialog" aria-label="Wishlist" aria-modal="true">
     <div class="box">
       <div style="display:flex;justify-content:space-between;align-items:center"><h3>Your Wishlist</h3><button class="btn btn-ghost" data-close="#wishlistModal">Close</button></div>
       <div id="wishlistItems" class="panel"></div>
@@ -673,16 +581,18 @@ footer a{color:#cbd5e1}
           <h4>Account</h4>
           <ul>
             <li><a href="#authModal" id="openAuth2">Login</a></li>
-            <li><a href="#">Orders</a></li>
-            <li><a href="#">Wishlist</a></li>
+            <li><a href="order.html">Orders</a></li>
+            <li><a href="#wishlistModal" id="openWishlist">Wishlist</a></li>
           </ul>
         </div>
         <div>
           <h4>Follow</h4>
           <ul>
-            <li><a href="#">Instagram</a></li>
-            <li><a href="#">Twitter</a></li>
-            <li><a href="#">YouTube</a></li>
+            <li><a href="https://m.instagram.com/https://m.instagram.com">Instagram</a></li>
+            <li><a href="https://m.tiktok.com/https://m.tiktok.com">Tiktok</a></li>
+            <li><a href="https://m.x.com/https://m.x.com">Twitter</a></li>
+            <a href="https://m.youtube.com/https://m.youtube.com">          <img src="yt.png" alt="YouTube Icon">
+
           </ul>
         </div>
       </div>

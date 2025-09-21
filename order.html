@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>ShopMaster — Order Tracking</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <style>
+    :root{--accent:#0b76ff;--muted:#6b7280;--card:#fff;--shadow:0 8px 30px rgba(12,20,40,.06);--success:#16a34a;--danger:#ef4444}
+    *{box-sizing:border-box}body{margin:0;font-family:Inter, system-ui, Arial;background:linear-gradient(180deg,#f7fbff,#eef2ff);color:#071433}
+    .wrap{max-width:1000px;margin:1rem auto;padding:1rem}
+    .card{background:var(--card);padding:1rem;border-radius:12px;box-shadow:var(--shadow)}
+    .muted{color:var(--muted)}
+    .tracker{display:flex;gap:1rem;align-items:center;justify-content:center;margin:1rem 0}
+    .stage{width:56px;height:56px;border-radius:999px;display:flex;align-items:center;justify-content:center;background:#fff;border:2px solid #f1f5f9;color:var(--muted);font-weight:800}
+    .stage.active{background:linear-gradient(90deg,var(--accent),#7c3aed);color:white;border-color:transparent;box-shadow:var(--shadow)}
+    .stage.small{width:44px;height:44px}
+    .btn{padding:.5rem .75rem;border-radius:10px;border:0;background:var(--accent);color:white}
+    .steps{display:flex;gap:.75rem;align-items:center;justify-content:center}
+    .order-items{display:flex;flex-direction:column;gap:.5rem;margin-top:.5rem}
+    .order-item{display:flex;gap:.5rem;align-items:center}
+    .order-item img{width:80px;height:80px;object-fit:cover;border-radius:8px}
+    .muted-small{color:var(--muted);font-size:.9rem}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+      <div style="font-weight:800">ShopMaster</div>
+      <div><a href="index.html">← Continue Shopping</a></div>
+    </header>
+
+    <div class="card">
+      <h2>Order Tracking</h2>
+      <div class="muted">Enter an order ID or click the latest order to view progress.</div>
+
+      <div style="display:flex;gap:.5rem;margin-top:.75rem">
+        <input id="orderInput" placeholder="Order ID (e.g. ORD...)" style="flex:1;padding:.6rem;border-radius:8px;border:1px solid #eef5ff"/>
+        <button class="btn" onclick="loadOrder()">Load Order</button>
+      </div>
+
+      <div id="orderBlock" style="margin-top:1rem;display:none">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div><strong id="orderId">ORD...</strong><div class="muted-small" id="orderDate">Date</div></div>
+          <div>
+            <button onclick="advanceStage()" style="margin-right:.5rem">Advance Stage</button>
+            <button onclick="requestReturn()" style="background:#fff;border:1px solid #f1f5f9;padding:.5rem .75rem;border-radius:8px">Request Return</button>
+          </div>
+        </div>
+
+        <!-- tracker -->
+        <div class="tracker" id="tracker">
+          <div class="stage" data-stage="processing">P</div>
+          <div class="muted">→</div>
+          <div class="stage" data-stage="tobe_shipped">T</div>
+          <div class="muted">→</div>
+          <div class="stage" data-stage="shipped">S</div>
+          <div class="muted">→</div>
+          <div class="stage" data-stage="delivered">D</div>
+          <div class="muted">→</div>
+          <div class="stage" data-stage="refund">R</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 320px;gap:1rem;margin-top:1rem">
+          <div>
+            <h4>Items</h4>
+            <div id="orderItems" class="order-items"></div>
+
+            <div style="margin-top:1rem">
+              <h4>Order Notes</h4>
+              <div id="orderNotes" class="muted-small"></div>
+            </div>
+          </div>
+
+          <aside>
+            <div style="background:#f8fbff;padding:1rem;border-radius:10px">
+              <div style="display:flex;justify-content:space-between"><div class="muted">Subtotal</div><div id="oSub">$0.00</div></div>
+              <div style="display:flex;justify-content:space-between"><div class="muted">Shipping</div><div id="oShip">$5.00</div></div>
+              <div style="display:flex;justify-content:space-between;font-weight:800;margin-top:.5rem"><div>Total</div><div id="oTotal">$0.00</div></div>
+              <div style="margin-top:.75rem"><button class="btn" onclick="goToIndex()">Shop More</button></div>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      <div id="noOrdersBlock" style="margin-top:1rem">
+        <h4>Recent Orders</h4>
+        <div id="recentOrders"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /***********************************************
+     * order.html — Order tracking and confirmation
+     * - Reads orders from localStorage
+     * - Shows latest orders and allows advancing stage (demo)
+     * - Circles change color from red to green as stage advances
+     ***********************************************/
+    const LS_ORDERS = 'sm_orders_v1';
+    let ORDERS = load(LS_ORDERS, []);
+    function load(key, fallback){ try{const v=localStorage.getItem(key);return v?JSON.parse(v):fallback}catch(e){return fallback} }
+    function save(key, v){ localStorage.setItem(key, JSON.stringify(v)); }
+
+    function renderRecent(){
+      const wrap = document.getElementById('recentOrders'); wrap.innerHTML='';
+      if(!ORDERS.length) { wrap.innerHTML = '<div class="muted">No orders yet. Place an order to track status.</div>'; return; }
+      ORDERS.slice(0,6).forEach(o=>{
+        const div = document.createElement('div'); div.style.padding='.5rem'; div.style.borderBottom='1px solid #f1f5f9'; div.style.display='flex'; div.style.justifyContent='space-between';
+        div.innerHTML = `<div><strong>${o.id}</strong><div class="muted-small">${new Date(o.date).toLocaleString()}</div></div><div><button onclick="loadOrder('${o.id}')">Open</button></div>`;
+        wrap.appendChild(div);
+      });
+    }
+
+    function loadOrder(id){
+      // if id passed as param use it, else from input
+      const oid = id || document.getElementById('orderInput').value.trim();
+      if(!oid) return alert('Enter order id');
+      const o = ORDERS.find(x=>x.id===oid);
+      if(!o) return alert('Order not found');
+      showOrder(o);
+    }
+
+    function showOrder(o){
+      document.getElementById('orderBlock').style.display='block';
+      document.getElementById('noOrdersBlock').style.display='none';
+      document.getElementById('orderId').textContent = o.id;
+      document.getElementById('orderDate').textContent = new Date(o.date).toLocaleString();
+      document.getElementById('orderNotes').textContent = o.notes || '—';
+      // items
+      const itemsWrap = document.getElementById('orderItems'); itemsWrap.innerHTML='';
+      o.items.forEach(it=>{
+        const div = document.createElement('div'); div.className='order-item';
+        div.innerHTML = `<img src="${it.img}" alt="${escapeHtml(it.title)}"><div style="flex:1"><div style="font-weight:800">${escapeHtml(it.title)}</div><div class="muted-small">${it.qty} × $${it.price}</div></div><div style="font-weight:800">$${(it.qty*it.price).toFixed(2)}</div>`;
+        itemsWrap.appendChild(div);
+      });
+      document.getElementById('oSub').textContent = '$' + o.subtotal.toFixed(2);
+      document.getElementById('oShip').textContent = '$' + (o.shipping || 5).toFixed(2);
+      document.getElementById('oTotal').textContent = '$' + o.total.toFixed(2);
+      // tracker
+      setTracker(o.status);
+      // store loaded order id on page state
+      window.currentOrderId = o.id;
+    }
+
+    function setTracker(status){
+      const orderSteps = ['Processing','To Be Shipped','Shipped','Delivered','Refund/Return'];
+      const stageEls = document.querySelectorAll('.stage');
+      // default reset
+      stageEls.forEach(el=>{ el.classList.remove('active'); el.title=''; });
+      // map status to index
+      const map = { 'Processing':0, 'To be shipped':1, 'To Be Shipped':1, 'Shipped':2, 'Delivered':3, 'Refund/Return':4, 'Refund and Return':4, 'Refund':4 };
+      const idx = map[status] !== undefined ? map[status] : 0;
+      // set active up to idx
+      if(idx >= 0){
+        for(let i=0;i<=idx;i++){
+          const el = stageEls[i*2]; // because there's arrows in between in markup
+          if(el) el.classList.add('active');
+        }
+      }
+    }
+
+    function advanceStage(){
+      const oid = window.currentOrderId;
+      if(!oid) return alert('No order loaded');
+      const o = ORDERS.find(x=>x.id===oid); if(!o) return;
+      const sequence = ['Processing','To Be Shipped','Shipped','Delivered','Refund/Return'];
+      let curIndex = sequence.indexOf(o.status);
+      if(curIndex === -1) curIndex = 0;
+      if(curIndex >= sequence.length - 1) return alert('Order is already in final stage');
+      o.status = sequence[curIndex + 1];
+      save(LS_ORDERS, ORDERS);
+      setTracker(o.status);
+      alert('Order stage updated to ' + o.status);
+    }
+
+    function requestReturn(){
+      const oid = window.currentOrderId;
+      if(!oid) return alert('No order loaded');
+      const o = ORDERS.find(x=>x.id===oid); if(!o) return;
+      o.status = 'Refund/Return';
+      save(LS_ORDERS, ORDERS);
+      setTracker(o.status);
+      alert('Return requested. Support will contact you.');
+    }
+
+    function goToIndex(){ window.location.href='index.html'; }
+
+    function escapeHtml(s){ if(!s) return ''; return String(s).replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' })[c]); }
+
+    // load on start: check querystring for orderId
+    (function init(){
+      ORDERS = load(LS_ORDERS, []);
+      renderRecent();
+      const params = new URLSearchParams(location.search);
+      const orderId = params.get('orderId');
+      if(orderId) loadOrder(orderId);
+    })();
+  </script>
+</body>
+</html>

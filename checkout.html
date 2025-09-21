@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Checkout — Demo Store</title>
+<script src="checkout.js"></script>
+<style>
+  :root{ --max-w:1100px; --accent:#2563eb; --muted:#6b7280 }
+  body{font-family:Inter, system-ui, Arial; margin:0; padding:20px; background:#f7f7fb; color:#111}
+  .wrap{max-width:var(--max-w); margin:18px auto; background:white; border-radius:12px; box-shadow:0 6px 22px rgba(12,13,18,0.06); padding:20px}
+  h1{margin:0 0 12px}
+  .grid{display:grid; grid-template-columns: 1fr 380px; gap:18px}
+  .card{padding:14px; border-radius:10px; background:#fff; border:1px solid #efefef}
+  .items{max-height:520px; overflow:auto}
+  .item{display:flex; gap:12px; align-items:center; padding:10px 0; border-bottom:1px dashed #eee}
+  .item img{width:72px; height:72px; object-fit:cover; border-radius:8px}
+  .item .meta{flex:1}
+  .muted{color:var(--muted); font-size:13px}
+  .small{font-size:13px}
+  .total-row{display:flex; justify-content:space-between; padding:10px 0}
+  .btn{display:inline-block; padding:10px 14px; border-radius:8px; cursor:pointer; border:0}
+  .btn-primary{background:var(--accent); color:white}
+  .btn-ghost{background:transparent; border:1px solid #ddd}
+  label{display:block; font-weight:600; margin:6px 0 6px}
+  input, select, textarea{width:100%; padding:8px 10px; border-radius:8px; border:1px solid #ddd}
+  .row{display:flex; gap:12px}
+  .row .col{flex:1}
+  .notice{background:#fffbeb; border-left:4px solid #f59e0b; padding:8px 12px; border-radius:6px; margin-bottom:10px}
+  .summary{position:sticky; top:18px}
+  .trust{display:flex; gap:8px; align-items:center}
+  .small-badge{font-size:12px; padding:6px 8px; border-radius:6px; background:#f1f5f9}
+  @media(max-width:980px){ .grid{grid-template-columns: 1fr; } .summary{position:relative} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Checkout</h1>
+  <p class="muted">Review your items, add shipping information and place the order.</p>
+
+  <div class="grid">
+    <div>
+      <div class="card">
+        <div class="notice">You are checking out from <strong>Demo Store</strong>. Cart is read from the session (sessionStorage) passed from the storefront.</div>
+
+        <h3>Items</h3>
+        <div id="itemsContainer" class="items"></div>
+
+        <div style="margin-top:12px">
+          <label for="coupon">Apply coupon</label>
+          <div style="display:flex; gap:8px"><input id="coupon" placeholder="Enter coupon code" /><button id="applyCoupon" class="btn btn-ghost">Apply</button></div>
+          <p id="couponMsg" class="muted small" style="margin-top:6px"></p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <h3>Shipping & Contact</h3>
+        <div id="shippingForm">
+          <label>Full name</label>
+          <input id="fullName" placeholder="Jane Doe" />
+
+          <label>Email</label>
+          <input id="email" placeholder="you@example.com" type="email" />
+
+          <label>Phone</label>
+          <input id="phone" placeholder="+1 555 555 555" />
+
+          <label>Address</label>
+          <input id="address" placeholder="123 Main St" />
+
+          <div class="row" style="margin-top:6px">
+            <div class="col"><label>City</label><input id="city" /></div>
+            <div class="col"><label>State / Province</label><input id="state" /></div>
+            <div style="width:140px"><label>Zip</label><input id="zip" /></div>
+          </div>
+
+          <label style="margin-top:10px">Shipping Method</label>
+          <select id="shippingMethod">
+            <option value="standard">Standard — 3-7 days</option>
+            <option value="express">Express — 1-2 days</option>
+            <option value="pickup">Local pickup — free</option>
+          </select>
+
+          <div style="margin-top:8px" class="muted small">We estimate taxes and shipping during checkout. No real payments collected — this is a demo flow.</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <h3>Payment (simulated)</h3>
+        <div id="paymentMethods">
+          <label><input type="radio" name="pay" value="card" checked /> Credit / Debit Card</label>
+          <div style="margin-top:8px">
+            <input id="cardName" placeholder="Name on card" />
+            <div class="row" style="margin-top:8px"><input id="cardNumber" placeholder="4242 4242 4242 4242" /><input id="cardExp" placeholder="MM/YY" style="width:100px" /><input id="cardCvc" placeholder="CVC" style="width:100px" /></div>
+          </div>
+
+          <label style="margin-top:10px"><input type="radio" name="pay" value="paypal" /> PayPal (simulated)</label>
+        </div>
+
+        <div style="margin-top:10px; display:flex; gap:8px; align-items:center">
+          <button id="placeOrder" class="btn btn-primary">Place Order</button>
+          <button id="backToShop" class="btn btn-ghost">Back to Shop</button>
+        </div>
+      </div>
+
+    </div>
+
+    <aside class="summary">
+      <div class="card">
+        <h3>Order Summary</h3>
+        <div id="summaryItems"></div>
+        <div class="total-row"><div class="muted">Subtotal</div><div id="subVal">$0.00</div></div>
+        <div class="total-row"><div class="muted">Shipping</div><div id="shipVal">$0.00</div></div>
+        <div class="total-row"><div class="muted">Tax</div><div id="taxVal">$0.00</div></div>
+        <hr />
+        <div class="total-row"><strong>Total</strong><strong id="grandVal">$0.00</strong></div>
+        <div style="margin-top:10px" class="trust"><div class="small-badge">SSL</div><div class="small-badge">PCI compliant</div><div class="small-badge">Secure</div></div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <h4>Need help?</h4>
+        <p class="muted small">Contact support@example.com or call +1 555 123 456</p>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script>
+// checkout.html script — reads sessionStorage checkoutCart set by index page
+(function(){
+  /* Utilities */
+  const $ = s=>document.querySelector(s);
+  const fmt = n => '$' + Number(n||0).toFixed(2);
+
+  // Load cart from sessionStorage
+  const raw = sessionStorage.getItem('checkoutCart');
+  let cart = [];
+  try{ cart = raw ? JSON.parse(raw) : []; }catch(_){ cart = []; }
+
+  // If there's none, try to load from localStorage fallback key ss_cart
+  if(!cart.length){
+    try{ cart = JSON.parse(localStorage.getItem('ss_cart')||'[]') }catch(_){ cart = []; }
+  }
+
+  // coupon system (simple)
+  const coupons = { 'SAVE10': 0.10, 'FREESHIP': 'FREESHIP' };
+  let appliedCoupon = null;
+
+  function renderItems(){
+    const container = $('#itemsContainer');
+    if(!cart.length){ container.innerHTML = '<p class="muted">No items in checkout. Go back to shop.</p>'; return; }
+    container.innerHTML = cart.map((it, idx)=>`
+      <div class="item" data-idx="${idx}">
+        <img src="${it.image||'https://via.placeholder.com/72'}" alt="${escapeHtml(it.title)}" />
+        <div class="meta">
+          <div style="font-weight:600">${escapeHtml(it.title)}</div>
+          <div class="muted small">${escapeHtml(it.description||'')}</div>
+          <div style="margin-top:6px" class="small">Price: ${fmt(it.price)} &middot; Qty: <input type="number" min="1" value="${it.quantity||1}" data-qty="${idx}" style="width:70px" /></div>
+        </div>
+        <div style="text-align:right">
+          <div class="small muted">Line</div>
+          <div style="font-weight:600">${fmt(it.price * (it.quantity||1))}</div>
+          <div style="margin-top:8px"><button class="btn btn-ghost" data-remove="${idx}">Remove</button></div>
+        </div>
+      </div>
+    `).join('');
+
+    // attach handlers
+    container.querySelectorAll('[data-qty]').forEach(inp=>{
+      inp.addEventListener('change', e=>{
+        const i = +inp.getAttribute('data-qty'); const v = Math.max(1, parseInt(inp.value)||1);
+        cart[i].quantity = v; updateAll();
+      });
+    });
+    container.querySelectorAll('[data-remove]').forEach(b=> b.addEventListener('click', ()=>{cart.splice(+b.getAttribute('data-remove'),1); updateAll(); renderItems();}));
+  }
+
+  function escapeHtml(s){ return (''+s).replace(/[&<>\"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+
+  function subtotal(){ return cart.reduce((n,i)=> n + (Number(i.price||0) * Number(i.quantity||1)), 0); }
+
+  function shippingCost(method){
+    if(!cart.length) return 0;
+    const weight = cart.reduce((n,i)=> n + (Number(i.weight||0) * (i.quantity||1)), 0);
+    // simple rules: pickup free, standard $5 + $0.5/kg, express $12 + $1/kg
+    if(method==='pickup') return 0;
+    if(method==='express') return 12 + weight*1;
+    return 5 + weight*0.5;
+  }
+
+  function taxAmount(sub){
+    // simple tax slab by location — default 8.5%
+    const rate = 0.085; return sub * rate;
+  }
+
+  function updateSummary(){
+    const sub = subtotal();
+    const shipMethod = $('#shippingMethod').value;
+    let ship = shippingCost(shipMethod);
+    let couponDiscount = 0;
+    if(appliedCoupon && typeof appliedCoupon === 'number') couponDiscount = sub * appliedCoupon;
+    if(appliedCoupon === 'FREESHIP') ship = 0;
+
+    const tax = taxAmount(Math.max(0, sub - couponDiscount));
+    const grand = Math.max(0, sub - couponDiscount) + ship + tax;
+
+    $('#subVal').textContent = fmt(sub - couponDiscount);
+    $('#shipVal').textContent = fmt(ship);
+    $('#taxVal').textContent = fmt(tax);
+    $('#grandVal').textContent = fmt(grand);
+
+    // render summary items
+    $('#summaryItems').innerHTML = cart.map(i=>`<div style="display:flex;justify-content:space-between;margin-bottom:6px"><div>${escapeHtml(i.title)} × ${i.quantity}</div><div>${fmt(i.price * i.quantity)}</div></div>`).join('');
+  }
+
+  function updateAll(){
+    // persist a small preview in session so page refresh keeps it
+    sessionStorage.setItem('checkoutCart', JSON.stringify(cart));
+    renderItems(); updateSummary();
+  }
+
+  // Hook shipping change
+  $('#shippingMethod').addEventListener('change', updateSummary);
+
+  // Coupon
+  $('#applyCoupon').addEventListener('click', ()=>{
+    const code = ($('#coupon').value || '').trim().toUpperCase();
+    if(!code){ $('#couponMsg').textContent = 'Enter a coupon code'; return; }
+    if(coupons[code]===undefined){ $('#couponMsg').textContent = 'Invalid coupon'; appliedCoupon = null; } else { appliedCoupon = coupons[code]; $('#couponMsg').textContent = `Applied ${code}`; }
+    updateAll();
+  });
+
+  // Back to shop
+  $('#backToShop').addEventListener('click', ()=>{ window.location.href = 'index.html'; });
+
+  // Place order flow
+  $('#placeOrder').addEventListener('click', ()=>{
+    // validate cart
+    if(!cart.length){ alert('Cart is empty'); return; }
+    // collect user data
+    const user = {
+      name: $('#fullName').value.trim(),
+      email: $('#email').value.trim(),
+      phone: $('#phone').value.trim(),
+      address: $('#address').value.trim(),
+      city: $('#city').value.trim(), state: $('#state').value.trim(), zip: $('#zip').value.trim()
+    };
+    if(!user.name || !user.email || !user.address){ alert('Please provide name, email and address'); return; }
+
+    // simple payment validation (simulated)
+    const payMethod = document.querySelector('input[name="pay"]:checked').value;
+    if(payMethod === 'card'){
+      const cn = $('#cardNumber').value.replace(/\s/g,'');
+      if(!/^[0-9]{12,19}$/.test(cn)){ alert('Enter a valid card number (demo)'); return; }
+    }
+
+    // prepare order object
+    const sub = subtotal();
+    let ship = shippingCost($('#shippingMethod').value);
+    let couponDiscount = 0; if(appliedCoupon && typeof appliedCoupon === 'number') couponDiscount = sub * appliedCoupon; if(appliedCoupon === 'FREESHIP') ship = 0;
+    const tax = taxAmount(Math.max(0, sub - couponDiscount));
+    const grand = Math.max(0, sub - couponDiscount) + ship + tax;
+
+    const order = {
+      id: 'ORD-' + Date.now().toString(36),
+      createdAt: new Date().toISOString(),
+      status: 'Placed',
+      items: cart.map(i=>({title:i.title, qty:i.quantity, price:i.price, total: i.price*i.quantity})),
+      subtotal: sub,
+      shipping: ship,
+      tax: tax,
+      discount: couponDiscount,
+      total: grand,
+      shippingMethod: $('#shippingMethod').value,
+      paymentMethod: payMethod,
+      customer: user
+    };
+
+    // save to localStorage orders namespace (ss_orders)
+    const ordersKey = 'ss_orders';
+    const prev = JSON.parse(localStorage.getItem(ordersKey) || '[]');
+    prev.push(order);
+    localStorage.setItem(ordersKey, JSON.stringify(prev));
+
+    // Save user for future fast checkout
+    localStorage.setItem('ss_user', JSON.stringify(user));
+
+    // Clear session checkout cart and optionally clear main cart (ss_cart)
+    sessionStorage.removeItem('checkoutCart');
+    // Optionally remove the shopping cart from localStorage as items are now ordered
+    try{ localStorage.setItem('ss_cart', JSON.stringify([])); }catch(_){ }
+
+    // redirect to order success page with order id in query
+    window.location.href = 'order-success.html?order=' + order.id;
+  });
+
+  // initial render
+  renderItems(); updateSummary();
+
+})();
+</script>
+</body>
+</html>

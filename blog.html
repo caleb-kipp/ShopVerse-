@@ -1,0 +1,453 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="ShopX Blog — fashion guides, product reviews, how-tos, and news. Read our latest posts, reviews and guides." />
+  <title>ShopX Blog — News, Guides & Reviews</title>
+  <link rel="alternate" type="application/rss+xml" title="ShopX Blog RSS" href="#" />
+  <style>
+    /* -------------------- Simple Reset -------------------- */
+    *{box-sizing:border-box}html,body{height:100%}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;line-height:1.45;color:#222;background:#fafafa}
+    a{color:var(--brand,#0b5cff);text-decoration:none}
+    img{max-width:100%;height:auto;display:block}/* -------------------- Layout -------------------- */
+:root{--brand:#0b5cff;--muted:#6b7280;--card:#fff}
+header.site-header{position:fixed;left:0;right:0;top:0;background:#fff;border-bottom:1px solid #eee;z-index:1200;padding:0.75rem 1rem;display:flex;align-items:center;gap:1rem}
+.site-title{font-weight:700;font-size:1.125rem}
+.nav{margin-left:auto;display:flex;gap:.5rem;align-items:center}
+.nav a{padding:.4rem .6rem;border-radius:6px}
+.nav a:hover{background:#f3f4f6}
+main{padding:90px 1rem 2rem;max-width:1200px;margin:0 auto}
+
+/* -------------------- Hero / Featured -------------------- */
+.hero{display:grid;grid-template-columns:1fr 360px;gap:1rem;align-items:start;margin-bottom:1rem}
+.hero-left{background:linear-gradient(180deg,rgba(11,92,255,.9),rgba(11,92,255,.75));color:#fff;padding:1.5rem;border-radius:12px;display:flex;flex-direction:column;justify-content:center;gap:1rem}
+.hero-left h1{margin:0;font-size:1.5rem}
+.hero-left p{margin:0;color:rgba(255,255,255,.9)}
+.hero-left .cta-row{display:flex;gap:.5rem}
+.hero-right{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.hero-card{background:var(--card);padding:.6rem;border-radius:8px;box-shadow:0 6px 18px rgba(12,20,40,.06)}
+
+/* -------------------- Grid & Articles -------------------- */
+.grid{display:grid;grid-template-columns:2fr 1fr;gap:1rem}
+.posts{display:grid;gap:1rem}
+article.post{background:var(--card);padding:1rem;border-radius:10px;box-shadow:0 6px 18px rgba(12,20,40,.04);display:flex;gap:1rem}
+.post .thumb{width:180px;flex:0 0 180px;border-radius:8px;overflow:hidden}
+.post h2{margin:.2rem 0;font-size:1.05rem}
+.meta{font-size:.875rem;color:var(--muted)}
+.excerpt{color:#374151}
+
+/* -------------------- Sidebar -------------------- */
+aside.sidebar{position:relative}
+.card{background:var(--card);padding:1rem;border-radius:10px;box-shadow:0 6px 18px rgba(12,20,40,.04);margin-bottom:1rem}
+.search input{width:100%;padding:.6rem;border-radius:8px;border:1px solid #e5e7eb}
+.tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.5rem}
+.tag{padding:.3rem .6rem;background:#f3f4f6;border-radius:999px;font-size:.8rem}
+
+/* -------------------- Post modal / reader -------------------- */
+.reader{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:1rem}
+.reader .sheet{max-width:900px;background:#fff;border-radius:12px;padding:1.25rem;max-height:90vh;overflow:auto}
+.close-reader{position:sticky;top:0;display:flex;justify-content:flex-end}
+
+/* -------------------- Comments -------------------- */
+.comments{margin-top:1rem}
+.comment{border-top:1px solid #f3f3f3;padding:.65rem 0}
+.comment small{color:var(--muted)}
+.comment-form textarea{width:100%;min-height:80px;padding:.5rem;border-radius:8px;border:1px solid #e5e7eb}
+
+/* -------------------- Utilities -------------------- */
+.row{display:flex;gap:.5rem;align-items:center}
+.btn{background:var(--brand);color:#fff;padding:.55rem .85rem;border-radius:8px;border:none;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--brand);border:1px solid #e6eefb}
+.muted{color:var(--muted)}
+@media (max-width:900px){.hero{grid-template-columns:1fr;}.hero-right{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}.hero-left{order:2}}
+
+  </style>
+</head>
+<body>
+  <header class="site-header" role="banner">
+    <div class="site-title">ShopX Blog</div>
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="index.html#new">Shop</a>
+      <a href="#posts">All Posts</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>  <main role="main">
+    <!-- HERO: featured + small cards -->
+    <section class="hero" aria-label="Featured posts and highlights">
+      <div class="hero-left" role="region" aria-labelledby="featured-heading">
+        <div id="featured-heading">
+          <h1>From the Workshop: Styling, Care & Trends</h1>
+          <p>In-depth guides, honest reviews, and seasonal editorials to help you shop smarter.</p>
+        </div>
+        <div class="row">
+          <button class="btn" id="openFeatured">Read Featured</button>
+          <button class="btn ghost" id="subscribeHero">Subscribe</button>
+        </div>
+      </div><div class="hero-right">
+    <div class="hero-card" id="top-post-1" tabindex="0" role="button" aria-pressed="false"></div>
+    <div class="hero-card" id="top-post-2" tabindex="0" role="button" aria-pressed="false"></div>
+    <div class="hero-card" id="top-post-3" tabindex="0" role="button" aria-pressed="false"></div>
+    <div class="hero-card" id="top-post-4" tabindex="0" role="button" aria-pressed="false"></div>
+  </div>
+</section>
+
+<!-- GRID: posts + sidebar -->
+<section class="grid">
+  <div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem">
+      <h2 id="posts">Latest Posts</h2>
+      <div class="row">
+        <label for="sort" class="muted">Sort</label>
+        <select id="sort" aria-label="Sort posts" style="margin-left:.5rem;padding:.4rem;border-radius:6px;border:1px solid #e5e7eb">
+          <option value="new">Newest</option>
+          <option value="popular">Most popular</option>
+          <option value="reading">Shortest read</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="posts" id="postList" aria-live="polite"></div>
+
+    <div class="card">
+      <h3>Most Liked</h3>
+      <div id="mostLiked" style="display:flex;gap:.5rem;overflow:auto;padding-top:.5rem"></div>
+    </div>
+
+  </div>
+
+  <aside class="sidebar" aria-label="Sidebar">
+    <div class="card search">
+      <label for="searchInput" class="muted">Search the blog</label>
+      <input id="searchInput" type="search" placeholder="Search articles, e.g. 'sneakers'" aria-label="Search blog posts"/>
+    </div>
+
+    <div class="card">
+      <h4>Categories</h4>
+      <ul id="categoryList" style="padding-left:1rem;margin:0"></ul>
+    </div>
+
+    <div class="card">
+      <h4>Tags</h4>
+      <div class="tags" id="tagList"></div>
+    </div>
+
+    <div class="card">
+      <h4>Newsletter</h4>
+      <form id="newsletterForm">
+        <label for="newsEmail" class="muted">Get editorial and promos</label>
+        <input id="newsEmail" type="email" placeholder="you@domain.com" required style="width:100%;margin-top:.5rem;padding:.5rem;border-radius:8px;border:1px solid #e5e7eb" />
+        <div style="margin-top:.5rem"><button class="btn" type="submit">Subscribe</button></div>
+      </form>
+    </div>
+
+    <div class="card">
+      <h4>Popular Posts</h4>
+      <div id="popularList"></div>
+    </div>
+
+  </aside>
+</section>
+
+<!-- PROMOS / TESTIMONIALS / BLOG TEASERS (user asked) -->
+<section aria-label="Promos and testimonials" style="margin-top:1rem">
+  <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px">
+    <div class="card">
+      <h3>Subscriber Perks</h3>
+      <p class="muted">Join the list for early access drops and members-only deals.</p>
+      <form id="miniNewsletter">
+        <input id="miniEmail" type="email" placeholder="you@domain.com" required style="padding:.5rem;border-radius:6px;border:1px solid #e5e7eb;width:60%" />
+        <button class="btn" type="submit">Join</button>
+      </form>
+      <div style="margin-top:12px;display:flex;gap:.6rem;flex-wrap:wrap">
+        <div class="tag">Secure Checkout</div>
+        <div class="tag">Free Returns</div>
+        <div class="tag">24/7 Support</div>
+        <div class="tag">Privacy First</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>What Customers Say</h3>
+      <blockquote class="muted">“Quality is stellar and delivery was fast. My go-to store now.” — <strong>Ada</strong></blockquote>
+      <blockquote class="muted">“Love the eco materials and the fit.” — <strong>Sam</strong></blockquote>
+      <blockquote class="muted">“Checkout was easy, support was helpful.” — <strong>Kim</strong></blockquote>
+    </div>
+
+    <div class="card" id="blog-teasers">
+      <h3>From the Blog</h3>
+      <ul id="teaserList" style="padding-left:1rem;margin:0"></ul>
+    </div>
+  </div>
+</section>
+
+  </main>  <!-- READER / POST MODAL -->  <div class="reader" id="reader" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="sheet" role="document">
+      <div class="close-reader"><button class="btn ghost" id="closeReader">Close</button></div>
+      <article id="readerContent"></article>
+      <section class="comments card" aria-label="Comments" id="commentsSection">
+        <h4>Comments</h4>
+        <div id="commentList"></div>
+        <div class="comment-form" style="margin-top:8px">
+          <textarea id="commentInput" placeholder="Write a comment" aria-label="Write a comment"></textarea>
+          <div style="margin-top:.5rem;display:flex;gap:.5rem">
+            <input id="commentName" placeholder="Your name" style="padding:.4rem;border-radius:6px;border:1px solid #e5e7eb" />
+            <button class="btn" id="submitComment">Submit</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>  <footer style="padding:2rem;text-align:center;color:#6b7280;margin-top:2rem">
+    <div>© 2025 ShopX · Blog & Editorials</div>
+    <div style="margin-top:.5rem">Accessibility: ARIA labels, keyboard navigation and readable contrast.</div>
+  </footer>  <script>
+    /***** Simulated backend data (preloaded posts) *****/
+    const POSTS = [
+      {
+        id: 'p1',
+        title: 'How to build a minimalist wardrobe',
+        category: 'Style',
+        tags: ['wardrobe','minimal','style'],
+        author: {name:'Caleb Kurui',bio:'Fashion editor & coffee farmer',id:'a1'},
+        date: '2025-08-15',
+        img: 'https://via.placeholder.com/720x480?text=Minimalist+Wardrobe',
+        content: `<p>Building a minimalist wardrobe starts with understanding your lifestyle and selecting versatile pieces...</p><p>(full long-form content goes here — this is a condensed example. In the real deployed file, replace with full 500+ word article.)</p>`,
+        likes: 54,
+        views: 230,
+        reading_min: 6,
+      },
+      {
+        id: 'p2',
+        title: 'Caring for organic cotton',
+        category: 'Care',
+        tags: ['care','organic','materials'],
+        author: {name:'Clara Moss',bio:'Textiles specialist',id:'a2'},
+        date: '2025-07-30',
+        img: 'https://via.placeholder.com/720x480?text=Organic+Cotton+Care',
+        content: `<p>Organic cotton needs gentler handling. Start with cold water washes and avoid harsh detergents...</p>`,
+        likes: 23,
+        views: 150,
+        reading_min: 4,
+      },
+      {
+        id: 'p3',
+        title: 'Sneaker trends this fall',
+        category: 'Trends',
+        tags: ['sneakers','trends','fall'],
+        author: {name:'Robin Lee',bio:'Streetwear journalist',id:'a3'},
+        date: '2025-09-01',
+        img: 'https://via.placeholder.com/720x480?text=Sneaker+Trends',
+        content: `<p>This season brings chunky soles and retro colorways back to the forefront...</p>`,
+        likes: 87,
+        views: 560,
+        reading_min: 5,
+      },
+      {
+        id: 'p4',
+        title: 'Best value winter coats 2025',
+        category: 'Guides',
+        tags: ['coats','winter','guides'],
+        author: {name:'Maya Perez',bio:'Product editor',id:'a4'},
+        date: '2025-01-12',
+        img: 'https://via.placeholder.com/720x480?text=Winter+Coats',
+        content: `<p>We tested 20 coats across price tiers to find the best combination of warmth and value...</p>`,
+        likes: 140,
+        views: 980,
+        reading_min: 8,
+      },
+            {
+        id: 'p5',
+        title: 'Kenyans React to Deputy President’s Impeachment',
+        category: 'Trends',
+        tags: ['sneakers','trends','fall'],
+        author: {name:'Caleb K',bio:'Streetwear journalist',id:'a5'},
+        date: '2025-09-11',
+        img: 'https://via.placeholder.com/720x480?text=Sneaker+Trends',
+        content: `<p>Kenyans are talking about it. The Deputy President has been impeached by the Senate, and the country is abuzz with opinions. Some think this is a step in the right direction. Others see it as an ominous sign of instability. But what led to this day? And more importantly, what does it portend for Kenya’s future as we head into the next three years?
+
+Why Was the Deputy President Impeached?
+
+He faced several grave accusations. They ranged from corruption and misuse of public resources to disregard for the authority of the President. The feeling among many was that he hurt the country and divided it, even at the government level. When evidence had been presented, the Senate decided the Deputy President had to go.This decision has left many Kenyans in suspense. The protests that followed, in particular, against high taxes, turned deadly with some young lives tragically lost. It is a tense time, and people rightly ask: What now?
+
+What Does This Mean for Kenya?
+
+The position of the Deputy President is key. They are not just spare candidates to the President. Rather, they are people meant to help in governing the country with much ease. If there was not a Deputy President, that would mean a power vacuum. Who would then assume that position? Would the government stay stable, or would we see more internal struggles?For the ordinary Kenyan, though, the question is more immediate: what does it portend for daily life? The economy is tough with rising taxes, unemployment, and a high cost of living besetting ordinary people. The government needs to show it can handle such challenges, especially now there’s one less leader at the top.
+
+What Should We Expect?
+
+The next three years are going to be crucial for Kenya. While heading up to the next election, everybody’s eyes are going to be glued on this government. Are they going to fix the economic problems that actually created these protests? Are they going to find a way to unite the country and move ahead after this political shake-up?Many Kenyans fear that this impeachment will bring more instability. On the other hand, some also believe it be a blessing in disguise. This moment be an opportunity for the government to get back on course. They can serve the interests of the people by delivering on their promises. We expect more discussions on aspects of leadership and accountability. Kenyans are asking for more from their leaders, and this impeachment has amplified such voices. It’s up to the government to respond with actions that show the will of the people.
+
+Why Is the Deputy President Important?
+
+The Deputy President is not just for decoration. They play a very vital role in making sure that the government machinery keeps running. When the President is busy or otherwise absent from duty, the Deputy steps in. They make sure things do not fall apart. They also help in making important decisions that affect the entire nation.Without a Deputy President, the rule of balance be disrupted. The government find it difficult to run and this mean delays for major projects and key policies. It’s a reminder of just how important strong, dependable leadership is.
+
+A Message to Kenyans: The Power of Good Governance
+
+The moment is not happy in Kenya, but it is also an opportunity. The impeachment of the Deputy President shows nobody is beyond the law. It is a reminder that leaders are there to serve the people and not themselves.As Kenyans, we must not tire from making legitimate demands in the interest of good governance. We want leaders who put the nation first. They should listen to the grievances of the people. They must work day and night for the betterment of the lives of all Kenyans. It be tough ahead, but together we can build a more robust united Kenya. Let us hold our leaders accountable. Together, we can make the next three years a period of development. We need to avoid further polarization. United and honest, Kenya can achieve a higher purpose. Kenya can transcend this moment. It can move ahead in pursuit of its aspirations. © Caleb’s Compass, 2024. All rights reserved.</p>`,
+        likes: 87,
+        views: 560,
+        reading_min: 5,
+      }
+    ];
+
+    /***** Utilities *****/
+    const $ = id => document.getElementById(id);
+
+    function formatDate(d){
+      const dt=new Date(d);return dt.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'})
+    }
+
+    function readingTime(min){return `${min} min read`}
+
+    /***** Render helpers *****/
+    function renderPostCard(post){
+      const div = document.createElement('article');
+      div.className='post';
+      div.innerHTML = `
+        <div class="thumb"><img loading="lazy" src="${post.img}" alt="${post.title}"></div>
+        <div>
+          <div class="meta">${post.category} · <time datetime="${post.date}">${formatDate(post.date)}</time> · ${readingTime(post.reading_min)}</div>
+          <h2><a href="#" data-id="${post.id}" class="open-post">${post.title}</a></h2>
+          <div class="excerpt">${post.content.replace(/<[^>]*>?/gm,'').slice(0,220)}...</div>
+          <div style="margin-top:.6rem;display:flex;gap:.5rem;align-items:center">
+            <button class="btn" data-like="${post.id}">❤️ ${post.likes}</button>
+            <button class="btn ghost" data-save="${post.id}">Save</button>
+            <div class="muted" style="margin-left:auto">${post.views} views</div>
+          </div>
+        </div>
+      `;
+      return div;
+    }
+
+    function listPosts(posts){
+      const container = $('postList');container.innerHTML='';
+      posts.forEach(p=>container.appendChild(renderPostCard(p)));
+      attachPostListeners();
+    }
+
+    function renderSidebar(){
+      // categories
+      const cats = Array.from(new Set(POSTS.map(p=>p.category)));
+      const ul = $('categoryList');ul.innerHTML='';cats.forEach(c=>{const li=document.createElement('li');li.innerHTML=`<a href="#" data-cat="${c}" class="filter-cat">${c}</a>`;ul.appendChild(li)});
+      // tags
+      const tags = [...new Set(POSTS.flatMap(p=>p.tags))];
+      const tl = $('tagList');tl.innerHTML='';tags.forEach(t=>{const b=document.createElement('button');b.className='tag';b.textContent=t;b.setAttribute('data-tag',t);tl.appendChild(b)})
+      // popular
+      const pop = POSTS.slice().sort((a,b)=>b.views-a.views).slice(0,4);
+      const popc = $('popularList');popc.innerHTML='';pop.forEach(p=>{const d=document.createElement('div');d.style.padding='.4rem 0';d.innerHTML=`<a href="#" data-id="${p.id}" class="open-post">${p.title}</a>`;popc.appendChild(d)})
+
+      // teasers
+      const teasers = $('teaserList');teasers.innerHTML='';POSTS.slice(0,5).forEach(p=>{const li=document.createElement('li');li.innerHTML=`<a href="#" data-id="${p.id}" class="open-post">${p.title}</a>`;teasers.appendChild(li)})
+
+      // most liked horizontal
+      const ml = $('mostLiked');ml.innerHTML='';POSTS.slice().sort((a,b)=>b.likes-a.likes).slice(0,6).forEach(p=>{const b=document.createElement('div');b.style.minWidth='140px';b.style.padding='6px';b.style.borderRadius='8px';b.style.background='#fff';b.style.boxShadow='0 4px 10px rgba(0,0,0,.04)';b.innerHTML=`<img src="${p.img}" style="width:100%;height:80px;object-fit:cover;border-radius:6px"><div style="font-size:.85rem;margin-top:.35rem">${p.title}</div>`;ml.appendChild(b)})
+    }
+
+    /***** Interactions *****/
+    function attachPostListeners(){
+      document.querySelectorAll('.open-post').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();openReader(e.target.dataset.id)}));
+      document.querySelectorAll('[data-like]').forEach(b=>b.addEventListener('click',e=>{const id=e.currentTarget.getAttribute('data-like');likePost(id)}));
+      document.querySelectorAll('[data-save]').forEach(b=>b.addEventListener('click',e=>{const id=e.currentTarget.getAttribute('data-save');savePost(id)}));
+    }
+
+    function openReader(id){
+      const post = POSTS.find(p=>p.id===id);if(!post) return;
+      // increment views (simulated backend)
+      post.views = (post.views||0)+1; renderStats();
+      const el = $('readerContent');
+      el.innerHTML = `<h1>${post.title}</h1><div class="meta">${post.category} · ${formatDate(post.date)} · ${readingTime(post.reading_min)} · by ${post.author.name}</div><img src="${post.img}" alt="${post.title}" style="margin-top:.6rem;border-radius:8px"><div style="margin-top:1rem">${post.content.repeat(6)}</div><div style="margin-top:1rem"><strong>Recommended</strong><div id="relatedRow" style="display:flex;gap:.5rem;margin-top:.5rem"></div></div>`;
+      // related
+      const related = POSTS.filter(p=>p.id!==post.id && p.tags.some(t=>post.tags.includes(t))).slice(0,4);
+      $('relatedRow').innerHTML='';related.forEach(r=>{const d=document.createElement('div');d.style.minWidth='120px';d.style.background='#fff';d.style.padding='6px';d.style.borderRadius='8px';d.innerHTML=`<img src="${r.img}" style="width:100%;height:70px;object-fit:cover;border-radius:6px"><div style="font-size:.85rem;margin-top:.35rem">${r.title}</div>`;$('relatedRow').appendChild(d)});
+
+      // comments load
+      loadComments(id);
+
+      // show reader
+      const reader = $('reader');reader.style.display='flex';reader.setAttribute('aria-hidden','false');
+      // store last opened for recently viewed
+      pushRecentlyViewed(post);
+    }
+
+    function closeReader(){
+      $('reader').style.display='none';$('reader').setAttribute('aria-hidden','true');
+      $('readerContent').innerHTML='';
+    }
+
+    $('closeReader').addEventListener('click',closeReader);
+    document.addEventListener('keydown',e=>{if(e.key==='Escape') closeReader()});
+
+    /***** Comments (localStorage powered) *****/
+    function commentsKey(postId){return `comments_${postId}`}
+    function loadComments(postId){
+      const raw = localStorage.getItem(commentsKey(postId));
+      const list = raw?JSON.parse(raw):[];
+      const out = $('commentList');out.innerHTML='';
+      if(list.length===0) out.innerHTML='<div class="muted">No comments yet — be the first.</div>';
+      list.forEach(c=>{const d=document.createElement('div');d.className='comment';d.innerHTML=`<strong>${escapeHtml(c.name)}</strong> <small>${formatDate(c.date)}</small><div>${escapeHtml(c.text)}</div>`;out.appendChild(d)})
+      // attach submit
+      $('submitComment').onclick = ()=>{
+        const text=$('commentInput').value.trim();const name=$('commentName').value.trim()||'Anonymous';if(!text) return alert('Write a comment');
+        const entry={name, text, date:new Date().toISOString()};list.unshift(entry);localStorage.setItem(commentsKey(postId),JSON.stringify(list));$('commentInput').value='';$('commentName').value='';loadComments(postId);
+      }
+    }
+
+    function escapeHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+    /***** Likes & Saves (local storage) *****/
+    function likePost(id){
+      const key=`likes_${id}`;const liked = localStorage.getItem(key);if(liked){localStorage.removeItem(key);const p=POSTS.find(x=>x.id===id);p.likes=Math.max(0,p.likes-1)}else{localStorage.setItem(key,'1');const p=POSTS.find(x=>x.id===id);p.likes=(p.likes||0)+1}renderStats();listPosts(POSTSFiltered());}
+    function savePost(id){const key=`saved_${id}`;if(localStorage.getItem(key)){localStorage.removeItem(key);alert('Removed from saved')}else{localStorage.setItem(key,'1');alert('Saved for later')}}
+
+    function renderStats(){/* re-render likes/view numbers where needed */}
+
+    /***** Recently viewed (simple) */
+    function pushRecentlyViewed(post){
+      const key='recently_viewed';let arr = JSON.parse(localStorage.getItem(key)||'[]');arr = arr.filter(x=>x.id!==post.id);arr.unshift({id:post.id,title:post.title,img:post.img});arr = arr.slice(0,12);localStorage.setItem(key,JSON.stringify(arr));renderRecentlyViewed();}
+    function renderRecentlyViewed(){const key='recently_viewed';const arr = JSON.parse(localStorage.getItem(key)||'[]');const el = document.getElementById('blog-teasers');if(!el) return;}
+
+    /***** Search & Filters & Sorting *****/
+    function POSTSFiltered(){
+      let list = POSTS.slice();
+      const q = $('searchInput').value.trim().toLowerCase();
+      if(q){list = list.filter(p=> (p.title+p.content+p.tags.join(' ')).toLowerCase().includes(q))}
+      const sort = $('sort').value; if(sort==='popular') list.sort((a,b)=>b.views-a.views); if(sort==='reading') list.sort((a,b)=>a.reading_min-b.reading_min); if(sort==='new') list.sort((a,b)=>new Date(b.date)-new Date(a.date));
+      return list;
+    }
+
+    $('searchInput').addEventListener('input', ()=>{listPosts(POSTSFiltered())});
+    $('sort').addEventListener('change', ()=>listPosts(POSTSFiltered()));
+
+    // category & tag filters
+    document.addEventListener('click', e=>{
+      const cat = e.target.closest('.filter-cat'); if(cat){e.preventDefault(); const c=cat.dataset.cat; listPosts(POSTS.filter(p=>p.category===c));}
+      const tag = e.target.closest('[data-tag]'); if(tag){const t=tag.dataset.tag; listPosts(POSTS.filter(p=>p.tags.includes(t)))}
+    })
+
+    /***** Newsletter forms (simulated) */
+    $('newsletterForm').addEventListener('submit', e=>{e.preventDefault();const em=$('newsEmail').value;alert('Subscribed: '+em);$('newsEmail').value=''});
+    $('miniNewsletter').addEventListener('submit', e=>{e.preventDefault();const em=$('miniEmail').value;alert('Subscribed: '+em);$('miniEmail').value=''});
+    document.getElementById('openFeatured').addEventListener('click', ()=>{openReader(POSTS[0].id)});
+
+    /***** Initial render */
+    listPosts(POSTS.slice().sort((a,b)=>new Date(b.date)-new Date(a.date)));
+    renderSidebar();
+
+    // fill hero cards
+    ['top-post-1','top-post-2','top-post-3','top-post-4'].forEach((id,i)=>{const el=$(id);const p=POSTS[i%POSTS.length];el.innerHTML=`<strong style="font-size:.95rem">${p.title}</strong><div class="muted" style="margin-top:.4rem">${p.category} · ${readingTime(p.reading_min)}</div>`;el.onclick=()=>openReader(p.id)})
+
+    // attach sort/search initially
+    // SEO: simulate structured data (simple)
+    const ld = {"@context":"https://schema.org","@type":"Blog","name":"ShopX Blog","url":location.href,"description":"ShopX editorial and product guides."};
+    const s = document.createElement('script'); s.type='application/ld+json'; s.textContent = JSON.stringify(ld); document.head.appendChild(s);
+
+    // accessibility: focus trap for reader
+    const reader = $('reader'); reader.addEventListener('keydown', (e)=>{ if(e.key==='Tab'){ /* simple no-op to ensure keyboard */ } });
+
+    // small helpers for demo: expose POSTS globally for future admin
+    window.__SHOPX = {POSTS};
+  </script></body>
+</html>
