@@ -19,7 +19,7 @@
 <script src="product-carousel.js"></script>
  <script src="product-view1.js"></script>
   <script src="button.js"></script>
-    <script src="scrt.js"></script>
+    <script src="script.js"></script>
      <script src="product-vie.js"></script>
       <script src="product-view0.js"></script>
        <script src="products-vie.js"></script>
@@ -498,6 +498,14 @@ footer a{color:#cbd5e1}
       <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
         <div class="helper">Secure checkout placeholder – multiple payment methods supported.</div>
         <button class="btn btn-primary" id="checkoutBtn">Checkout</button>
+        <!-- Example Cart Modal -->
+
+<script>
+document.getElementById("checkoutBtn").addEventListener("click", function () {
+  // Redirect to checkout.html
+  window.location.href = "checkout.html";
+});
+</script>
       </div>
     </div>
   </div>  <div class="modal" id="wishlistModal" role="dialog" aria-label="Wishlist" aria-modal="true">
