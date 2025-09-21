@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Checkout — Demo Store</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Checkout — Store</title>
 <script src="checkout.js"></script>
 <style>
   :root{ --max-w:1100px; --accent:#2563eb; --muted:#6b7280 }
@@ -48,7 +48,7 @@
 
         <div style="margin-top:12px">
           <label for="coupon">Apply coupon</label>
-          <div style="display:flex; gap:8px"><input id="coupon" placeholder="Enter coupon code" /><button id="applyCoupon" class="btn btn-ghost">Apply</button></div>
+          <div style="display:flex; gap:8px"><input id="coupon" placeholder="Enter coupon code"><button id="applyCoupon" class="btn btn-ghost">Apply</button></div>
           <p id="couponMsg" class="muted small" style="margin-top:6px"></p>
         </div>
       </div>
@@ -57,21 +57,21 @@
         <h3>Shipping & Contact</h3>
         <div id="shippingForm">
           <label>Full name</label>
-          <input id="fullName" placeholder="Jane Doe" />
+          <input id="fullName" placeholder="Jane Doe">
 
           <label>Email</label>
-          <input id="email" placeholder="you@example.com" type="email" />
+          <input id="email" placeholder="you@example.com" type="email">
 
           <label>Phone</label>
-          <input id="phone" placeholder="+1 555 555 555" />
+          <input id="phone" placeholder="+1 555 555 555">
 
           <label>Address</label>
-          <input id="address" placeholder="123 Main St" />
+          <input id="address" placeholder="123 Main St">
 
           <div class="row" style="margin-top:6px">
-            <div class="col"><label>City</label><input id="city" /></div>
-            <div class="col"><label>State / Province</label><input id="state" /></div>
-            <div style="width:140px"><label>Zip</label><input id="zip" /></div>
+            <div class="col"><label>City</label><input id="city"></div>
+            <div class="col"><label>State / Province</label><input id="state"></div>
+            <div style="width:140px"><label>Zip</label><input id="zip"></div>
           </div>
 
           <label style="margin-top:10px">Shipping Method</label>
@@ -88,13 +88,13 @@
       <div class="card" style="margin-top:12px">
         <h3>Payment (simulated)</h3>
         <div id="paymentMethods">
-          <label><input type="radio" name="pay" value="card" checked /> Credit / Debit Card</label>
+          <label><input type="radio" name="pay" value="card" checked> Credit / Debit Card</label>
           <div style="margin-top:8px">
-            <input id="cardName" placeholder="Name on card" />
-            <div class="row" style="margin-top:8px"><input id="cardNumber" placeholder="4242 4242 4242 4242" /><input id="cardExp" placeholder="MM/YY" style="width:100px" /><input id="cardCvc" placeholder="CVC" style="width:100px" /></div>
+            <input id="cardName" placeholder="Name on card">
+            <div class="row" style="margin-top:8px"><input id="cardNumber" placeholder="4242 4242 4242 4242"><input id="cardExp" placeholder="MM/YY" style="width:100px"><input id="cardCvc" placeholder="CVC" style="width:100px"></div>
           </div>
 
-          <label style="margin-top:10px"><input type="radio" name="pay" value="paypal" /> PayPal (simulated)</label>
+          <label style="margin-top:10px"><input type="radio" name="pay" value="paypal"> PayPal (simulated)</label>
         </div>
 
         <div style="margin-top:10px; display:flex; gap:8px; align-items:center">
@@ -112,7 +112,7 @@
         <div class="total-row"><div class="muted">Subtotal</div><div id="subVal">$0.00</div></div>
         <div class="total-row"><div class="muted">Shipping</div><div id="shipVal">$0.00</div></div>
         <div class="total-row"><div class="muted">Tax</div><div id="taxVal">$0.00</div></div>
-        <hr />
+        <hr>
         <div class="total-row"><strong>Total</strong><strong id="grandVal">$0.00</strong></div>
         <div style="margin-top:10px" class="trust"><div class="small-badge">SSL</div><div class="small-badge">PCI compliant</div><div class="small-badge">Secure</div></div>
       </div>

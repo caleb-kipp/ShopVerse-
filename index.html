@@ -1,30 +1,30 @@
 <!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" >
   <title>ShopSphere – Modern E‑commerce Demo</title>
-  <meta name="description" content="Accessible, responsive e‑commerce demo with product modal, search autocomplete, wishlist, cart, reviews, analytics filters, and more." />
-  <meta name="keywords" content="ecommerce, demo, shop, cart, wishlist, product modal, search, accessibility, responsive" />
-  <meta name="theme-color" content="#111827" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <meta name="description" content="Accessible, responsive e‑commerce demo with product modal, search autocomplete, wishlist, cart, reviews, analytics filters, and more.">
+  <meta name="keywords" content="ecommerce, demo, shop, cart, wishlist, product modal, search, accessibility, responsive">
+  <meta name="theme-color" content="#111827">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
       <script src="index.js"></script>
           <script src="dynamicproduct.js"></script>  
           <script src="produc.js"></script>
-          <script src="produc.js"></script>
+          <script src="app.js"></script>
 <script src="product-bridge.js"></script>
- <link rel="stylesheet" href="product2.css" />
+ <link rel="stylesheet" href="product2.css">
 <script src="indexproductmodal.js"></script>
 <script src="product-carousel.js"></script>
  <script src="product-view1.js"></script>
   <script src="button.js"></script>
     <script src="script.js"></script>
-     <script src="product-view.js"></script>
+     <script src="product-vie.js"></script>
       <script src="product-view0.js"></script>
-       <script src="products-view.js"></script>
+       <script src="products-vie.js"></script>
         <script src="index0.js"></script>
-         <script src="index1.js"></script>
+         <script src="inde.js"></script>
   <style>
     :root{
       --bg:#0b0f14; --card:#121825; --muted:#6b7280; --text:#e5e7eb; --brand:#22c55e; --brand-2:#06b6d4; --accent:#f59e0b; --danger:#ef4444; --shadow:0 10px 30px rgba(0,0,0,.25);
@@ -209,24 +209,24 @@ footer a{color:#cbd5e1}
         <a class="brand" href="#" aria-label="ShopSphere home">
           <span class="logo" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="logo">
-              <path d="M12 3l8 4v10l-8 4-8-4V7l8-4z" stroke="white" stroke-width="2"/>
-              <circle cx="12" cy="12" r="3" fill="white"/>
+              <path d="M12 3l8 4v10l-8 4-8-4V7l8-4z" stroke="white" stroke-width="2">
+              <circle cx="12" cy="12" r="3" fill="white">
             </svg>
           </span>
           <span>ShopSphere</span>
         </a>
         <div class="search" role="search">
           <label class="sr-only" for="searchInput">Search products</label>
-          <input id="searchInput" type="search" placeholder="Search products... (⌘/Ctrl + K)" aria-autocomplete="list" aria-haspopup="listbox" aria-expanded="false" aria-controls="acList" />
+          <input id="searchInput" type="search" placeholder="Search products... (⌘/Ctrl + K)" aria-autocomplete="list" aria-haspopup="listbox" aria-expanded="false" aria-controls="acList">
           <div class="icon" aria-hidden="true">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="white"/><path d="M20 20l-3.5-3.5" stroke="white"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="white"><path d="M20 20l-3.5-3.5" stroke="white"></svg>
           </div>
           <div id="autocomplete" class="autocomplete" role="listbox" aria-label="Search suggestions"></div>
         </div>
         <div class="actions">
-          <button class="icon-btn" id="openWishlist" aria-label="Open wishlist"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s-7-4.35-7-10a4 4 0 018-1 4 4 0 018 1c0 5.65-7 10-7 10z" stroke="white"/></svg></button>
-          <button class="icon-btn" id="openCart" aria-label="Open cart"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="20" r="1" fill="white"/><circle cx="17" cy="20" r="1" fill="white"/><path d="M3 4h2l2.4 12.5A2 2 0 009.37 18H18a2 2 0 001.96-1.6L22 8H6" stroke="white"/></svg> <span id="cartCount" class="pill" aria-live="polite" aria-label="Items in cart">0</span></button>
-          <button class="icon-btn" id="openAuth" aria-label="Open login/register"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="7" r="4" stroke="white"/><path d="M4 21a8 8 0 0116 0" stroke="white"/></svg></button>
+          <button class="icon-btn" id="openWishlist" aria-label="Open wishlist"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s-7-4.35-7-10a4 4 0 018-1 4 4 0 018 1c0 5.65-7 10-7 10z" stroke="white"></svg></button>
+          <button class="icon-btn" id="openCart" aria-label="Open cart"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="20" r="1" fill="white"><circle cx="17" cy="20" r="1" fill="white"><path d="M3 4h2l2.4 12.5A2 2 0 009.37 18H18a2 2 0 001.96-1.6L22 8H6" stroke="white"></svg> <span id="cartCount" class="pill" aria-live="polite" aria-label="Items in cart">0</span></button>
+          <button class="icon-btn" id="openAuth" aria-label="Open login/register"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="7" r="4" stroke="white"><path d="M4 21a8 8 0 0116 0" stroke="white"></svg></button>
         </div>
       </div>
      
@@ -247,7 +247,7 @@ footer a{color:#cbd5e1}
     <!-- HERO: big left image (50%), four right cards (2x2) (50%), looping accessible slider -->
     <section class="hero" aria-label="Hero and featured">
       <div class="hero-left" id="heroSlider" aria-roledescription="carousel" aria-label="Promotions" tabindex="0">
-        <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1400&auto=format&fit=crop" alt="Summer collection banner" loading="eager" />
+        <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1400&auto=format&fit=crop" alt="Summer collection banner" loading="eager">
         <div class="hero-overlay">
           <div>
             <h1 style="margin:0 0 6px">Feel Good. Look Great.</h1>
@@ -261,7 +261,7 @@ footer a{color:#cbd5e1}
       </div>
       <div class="hero-right">
         <article class="mini-card" aria-label="Card 1">
-          <img src="https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=800&auto=format&fit=crop" alt="Eco tees" loading="lazy" />
+          <img src="https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=800&auto=format&fit=crop" alt="Eco tees" loading="lazy">
           <div>
             <h3 style="margin:6px 0">Eco Tees</h3>
             <p class="helper">Breathable, organic, everyday staples.</p>
@@ -269,7 +269,7 @@ footer a{color:#cbd5e1}
           <div class="foot"><span class="pill">New</span><button class="btn btn-ghost" data-cat="tees">Explore</button></div>
         </article>
         <article class="mini-card" aria-label="Card 2">
-          <img src="https://images.unsplash.com/photo-1520975922257-8e53a1b5e84b?q=80&w=800&auto=format&fit=crop" alt="City sneakers" loading="lazy" />
+          <img src="https://images.unsplash.com/photo-1520975922257-8e53a1b5e84b?q=80&w=800&auto=format&fit=crop" alt="City sneakers" loading="lazy">
           <div>
             <h3 style="margin:6px 0">City Sneakers</h3>
             <p class="helper">Comfort meets performance.</p>
@@ -277,7 +277,7 @@ footer a{color:#cbd5e1}
           <div class="foot"><span class="pill" style="background:var(--accent);color:#1f1300">Deal</span><button class="btn btn-ghost" data-cat="sneakers">Shop</button></div>
         </article>
         <article class="mini-card" aria-label="Card 3">
-          <img src="https://images.unsplash.com/photo-1542326237-94b1c5a538d9?q=80&w=800&auto=format&fit=crop" alt="Athleisure sets" loading="lazy" />
+          <img src="https://images.unsplash.com/photo-1542326237-94b1c5a538d9?q=80&w=800&auto=format&fit=crop" alt="Athleisure sets" loading="lazy">
           <div>
             <h3 style="margin:6px 0">Athleisure Sets</h3>
             <p class="helper">Mix, match, move.</p>
@@ -285,7 +285,7 @@ footer a{color:#cbd5e1}
           <div class="foot"><span class="pill" style="background:#60a5fa;color:#001229">Popular</span><button class="btn btn-ghost" data-cat="athleisure">Browse</button></div>
         </article>
         <article class="mini-card" aria-label="Card 4">
-          <img src="https://images.unsplash.com/photo-1503342217505-b0a15cf70489?q=80&w=800&auto=format&fit=crop" alt="Accessories" loading="lazy" />
+          <img src="https://images.unsplash.com/photo-1503342217505-b0a15cf70489?q=80&w=800&auto=format&fit=crop" alt="Accessories" loading="lazy">
           <div>
             <h3 style="margin:6px 0">Accessories</h3>
             <p class="helper">Finish the look.</p>
@@ -359,18 +359,18 @@ footer a{color:#cbd5e1}
       <h3>Subscriber Perks</h3>
       <p class="helper">Join the list for early access drops and members-only deals.</p>
       <form id="newsletterForm" aria-label="Newsletter signup">
-        <div class="field"><label for="newsEmail">Email</label><input id="newsEmail" type="email" placeholder="you@domain.com" required aria-required="true" aria-label="Email address"/></div>
-        <div class="field"><label><input type="checkbox" required aria-required="true"/> I agree to receive emails.</label></div>
+        <div class="field"><label for="newsEmail">Email</label><input id="newsEmail" type="email" placeholder="you@domain.com" required aria-required="true" aria-label="Email address"></div>
+        <div class="field"><label><input type="checkbox" required aria-required="true"> I agree to receive emails.</label></div>
         <button class="btn btn-primary" type="submit">Sign Up</button>
       </form>
       <div class="trust" style="margin-top:14px" aria-label="Trust badges">
         <div class="badge" title="Secure checkout">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3l7 4v5a7 7 0 11-14 0V7l7-4z" stroke="white"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3l7 4v5a7 7 0 11-14 0V7l7-4z" stroke="white"></svg>
           <span>Secure Checkout</span>
         </div>
-        <div class="badge" title="Free returns"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 12a9 9 0 1115.9 6.1" stroke="white"/><path d="M3 12h6M3 12l2-2M3 12l2 2" stroke="white"/></svg><span>Free Returns</span></div>
-        <div class="badge" title="24/7 support"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="white"/><path d="M8 12h8M12 8v8" stroke="white"/></svg><span>24/7 Support</span></div>
-        <div class="badge" title="Privacy first"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l7 4v5c0 5-4.03 9-9 9S1 16 1 11V6l11-4z" stroke="white"/></svg><span>Privacy First</span></div>
+        <div class="badge" title="Free returns"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 12a9 9 0 1115.9 6.1" stroke="white"><path d="M3 12h6M3 12l2-2M3 12l2 2" stroke="white"></svg><span>Free Returns</span></div>
+        <div class="badge" title="24/7 support"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="white"><path d="M8 12h8M12 8v8" stroke="white"></svg><span>24/7 Support</span></div>
+        <div class="badge" title="Privacy first"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l7 4v5c0 5-4.03 9-9 9S1 16 1 11V6l11-4z" stroke="white"></svg><span>Privacy First</span></div>
       </div>
       <div class="helper" style="margin-top:8px">We respect accessibility: ARIA labels, semantic HTML, and keyboard support are built-in.</div>
     </div>
@@ -387,7 +387,7 @@ footer a{color:#cbd5e1}
   <h2 id="blogTitle">From the blog</h2>
   <div class="grid blog">
     <article class="card">
-      <img src="https://picsum.photos/800/500?random=41" alt="Sustainability practices" loading="lazy" />
+      <img src="https://picsum.photos/800/500?random=41" alt="Sustainability practices" loading="lazy">
       <div style="padding:12px">
         <h3>5 ways we’re going greener</h3>
         <p class="sub">Sustainable packaging, renewable energy, and more.</p>
@@ -395,7 +395,7 @@ footer a{color:#cbd5e1}
       </div>
     </article>
     <article class="card">
-      <img src="https://picsum.photos/800/500?random=42" alt="Size guide" loading="lazy" />
+      <img src="https://picsum.photos/800/500?random=42" alt="Size guide" loading="lazy">
       <div style="padding:12px">
         <h3>Ultimate size & fit guide</h3>
         <p class="sub">Nail your fit with our quick sizing tips.</p>
@@ -403,7 +403,7 @@ footer a{color:#cbd5e1}
       </div>
     </article>
     <article class="card">
-      <img src="https://picsum.photos/800/500?random=43" alt="Care tips" loading="lazy" />
+      <img src="https://picsum.photos/800/500?random=43" alt="Care tips" loading="lazy">
       <div style="padding:12px">
         <h3>Care tips to make gear last</h3>
         <p class="sub">Easy wins to extend product life cycles.</p>
@@ -430,7 +430,7 @@ footer a{color:#cbd5e1}
     <div class="modal-content">
       <button class="close-btn" id="modalClose" aria-label="Close product dialog">&times;</button>
       <div class="modal-left" id="modalLeft">
-        <div class="viewer" id="viewer"><img src="" alt="Product image" id="viewerImg" /></div>
+        <div class="viewer" id="viewer"><img src="" alt="Product image" id="viewerImg"></div>
         <div class="related-carousel" id="relatedCarousel" aria-label="Related products thumbnails"><!-- related items --></div>
       </div>
       <div class="modal-right" id="modalRight">
@@ -439,7 +439,7 @@ footer a{color:#cbd5e1}
         <div class="price" id="mPrice">$0.00</div>
         <div class="helper" id="mSku">SKU: —</div>
         <div class="options" id="mVariants" aria-label="Variants"></div>
-        <div class="qty"><label for="mQty">Qty</label><input id="mQty" type="number" min="1" value="1" style="width:72px" /></div>
+        <div class="qty"><label for="mQty">Qty</label><input id="mQty" type="number" min="1" value="1" style="width:72px"></div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">
           <button class="btn btn-primary" id="mAddCart">Add to Cart</button>
           <button class="btn btn-ghost" id="mBuyNow">Buy Now</button>
@@ -514,22 +514,22 @@ footer a{color:#cbd5e1}
       </div>
       <div id="authPanels">
         <form id="loginForm" aria-label="Login" class="panel" style="margin-top:10px">
-          <div class="field"><label for="lEmail">Email</label><input id="lEmail" type="email" required /></div>
-          <div class="field"><label for="lPass">Password</label><input id="lPass" type="password" required /></div>
-          <div class="field"><label for="l2fa">2FA Code (optional)</label><input id="l2fa" inputmode="numeric" pattern="[0-9]*" placeholder="123456" /></div>
-          <div class="field"><label for="lCaptcha">Captcha: <span id="lCaptchaQ"></span></label><input id="lCaptcha" required aria-describedby="lHelp" /><div id="lHelp" class="helper">Prove you’re human</div></div>
+          <div class="field"><label for="lEmail">Email</label><input id="lEmail" type="email" required ></div>
+          <div class="field"><label for="lPass">Password</label><input id="lPass" type="password" required ></div>
+          <div class="field"><label for="l2fa">2FA Code (optional)</label><input id="l2fa" inputmode="numeric" pattern="[0-9]*" placeholder="123456" ></div>
+          <div class="field"><label for="lCaptcha">Captcha: <span id="lCaptchaQ"></span></label><input id="lCaptcha" required aria-describedby="lHelp"><div id="lHelp" class="helper">Prove you’re human</div></div>
           <button class="btn btn-primary" type="submit">Login</button>
         </form><form id="regForm" aria-label="Register" class="panel" hidden>
-      <div class="field"><label for="rName">Name</label><input id="rName" required /></div>
-      <div class="field"><label for="rEmail">Email</label><input id="rEmail" type="email" required /></div>
-      <div class="field"><label for="rPass">Password</label><input id="rPass" type="password" required /></div>
-      <div class="field"><label for="rCaptcha">Captcha: <span id="rCaptchaQ"></span></label><input id="rCaptcha" required /></div>
+      <div class="field"><label for="rName">Name</label><input id="rName" required></div>
+      <div class="field"><label for="rEmail">Email</label><input id="rEmail" type="email" required></div>
+      <div class="field"><label for="rPass">Password</label><input id="rPass" type="password" required></div>
+      <div class="field"><label for="rCaptcha">Captcha: <span id="rCaptchaQ"></span></label><input id="rCaptcha" required></div>
       <button class="btn btn-primary" type="submit">Create account</button>
     </form>
 
     <form id="resetForm" aria-label="Reset password" class="panel" hidden>
-      <div class="field"><label for="xEmail">Email</label><input id="xEmail" type="email" required /></div>
-      <div class="field"><label for="xCaptcha">Captcha: <span id="xCaptchaQ"></span></label><input id="xCaptcha" required /></div>
+      <div class="field"><label for="xEmail">Email</label><input id="xEmail" type="email" required></div>
+      <div class="field"><label for="xCaptcha">Captcha: <span id="xCaptchaQ"></span></label><input id="xCaptcha" required></div>
       <button class="btn btn-primary" type="submit">Send reset link</button>
     </form>
   </div>
@@ -544,18 +544,18 @@ footer a{color:#cbd5e1}
       </div>
       <div id="helpPanels" style="margin-top:10px">
         <form id="contactForm" class="panel" aria-label="Contact us">
-          <div class="field"><label for="cName">Name</label><input id="cName" required /></div>
-          <div class="field"><label for="cEmail">Email</label><input id="cEmail" type="email" required /></div>
+          <div class="field"><label for="cName">Name</label><input id="cName" required></div>
+          <div class="field"><label for="cEmail">Email</label><input id="cEmail" type="email" required></div>
           <div class="field"><label for="cMsg">Message</label><textarea id="cMsg" rows="4" required></textarea></div>
           <button class="btn btn-primary" type="submit">Send</button>
         </form>
         <form id="returnsForm" class="panel" hidden aria-label="Returns">
-          <div class="field"><label for="rOrder">Order #</label><input id="rOrder" required /></div>
+          <div class="field"><label for="rOrder">Order #</label><input id="rOrder" required></div>
           <div class="field"><label for="rReason">Reason</label><select id="rReason"><option>Too large</option><option>Too small</option><option>Damaged</option><option>Changed mind</option></select></div>
           <button class="btn btn-primary" type="submit">Start Return</button>
         </form>
         <form id="trackForm" class="panel" hidden aria-label="Order tracking">
-          <div class="field"><label for="tOrder">Order #</label><input id="tOrder" required /></div>
+          <div class="field"><label for="tOrder">Order #</label><input id="tOrder" required></div>
           <button class="btn btn-primary" type="submit">Track</button>
           <div id="trackResult" class="helper" style="margin-top:8px"></div>
         </form>

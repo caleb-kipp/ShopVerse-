@@ -1,0 +1,352 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Social‑Ecom Mega — Social + Shop</title>
+  <style>
+    /* ---------- Basic layout ---------- */
+    :root{--accent:#0077ff;--muted:#6b7280;--bg:#0f172a;--card:#0b1220;--glass: rgba(255,255,255,0.03)}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;background:linear-gradient(180deg,#071029 0%, #071026 100%);color:#e6eef8}
+    .container{max-width:1200px;margin:18px auto;padding:16px;display:grid;grid-template-columns:320px 1fr 320px;gap:16px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:14px;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.6)}
+    header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+    header h1{font-size:18px;margin:0}/* ----- left column ----- */
+.profile{display:flex;gap:12px;align-items:center}
+.avatar{width:64px;height:64px;border-radius:10px;background:linear-gradient(45deg,var(--accent),#6ee7b7);display:flex;align-items:center;justify-content:center;font-weight:700}
+.small{font-size:13px;color:var(--muted)}
+.nav-item{padding:8px;border-radius:8px;cursor:pointer}
+.nav-item:hover{background:var(--glass)}
+
+/* ----- feed (center) ----- */
+.composer{display:flex;gap:10px;align-items:flex-start}
+textarea{width:100%;min-height:64px;background:transparent;border:1px dashed rgba(255,255,255,0.04);padding:10px;border-radius:8px;color:inherit}
+.post{margin-top:12px;padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));}
+.post .meta{display:flex;gap:8px;align-items:center}
+.post .actions{display:flex;gap:8px;margin-top:8px}
+.btn{padding:8px 10px;border-radius:8px;background:var(--accent);border:none;color:#001;cursor:pointer}
+.btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
+
+/* ----- right column ----- */
+.product{display:flex;gap:10px;margin-bottom:12px}
+.product img{width:84px;height:84px;object-fit:cover;border-radius:8px}
+.badge{display:inline-block;padding:4px 6px;border-radius:20px;background:rgba(255,255,255,0.03);font-size:12px}
+
+/* modals */
+.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.45);z-index:60}
+.modal.open{display:flex}
+.modal .panel{width:960px;max-width:96%;background:#031225;padding:16px;border-radius:12px}
+.two-col{display:grid;grid-template-columns:1fr 360px;gap:12px}
+
+/* chat */
+.chat{height:420px;display:flex;flex-direction:column;border-radius:10px;background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0.00));padding:12px}
+.messages{flex:1;overflow:auto;padding-right:8px}
+.msg{max-width:70%;padding:10px;border-radius:10px;margin:8px 0}
+.msg.user{align-self:flex-end;background:linear-gradient(180deg,#0ea5a6,#7dd3fc);color:#001}
+.msg.admin{align-self:flex-start;background:rgba(255,255,255,0.03)}
+.chat-input{display:flex;gap:8px}
+.pill{padding:6px 8px;border-radius:999px;background:rgba(255,255,255,0.02)}
+
+/* responsive */
+@media (max-width:980px){.container{grid-template-columns:1fr;}.card.right{display:none}.product img{width:64px;height:64px}}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- LEFT: Profile & Navigation -->
+    <aside class="card left">
+      <header>
+        <div class="avatar" id="profileAvatar">CU</div>
+        <div>
+          <h1 id="profileName">Customer User</h1>
+          <div class="small" id="profileBio">Eco-conscious shopper • Riwo</div>
+        </div>
+      </header><div>
+    <div class="nav-item" onclick="openModal('compose')">✨ Create Post</div>
+    <div class="nav-item" onclick="openModal('cart')">🧺 Cart <span id="cartCount" class="badge">0</span></div>
+    <div class="nav-item" onclick="openModal('customerService')">💬 Customer Service</div>
+    <div class="nav-item" onclick="openModal('analytics')">📊 Analytics (stub)</div>
+    <div class="nav-item" onclick="toggleTwoFA()">🔐 Toggle 2FA (mock)</div>
+  </div>
+
+  <hr style="margin:12px 0;border:none;border-top:1px dashed rgba(255,255,255,0.03)" />
+  <div>
+    <div class="small">Search</div>
+    <input id="globalSearch" placeholder="Search products, users, posts..." style="width:100%;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit" oninput="handleSearch(event)" />
+  </div>
+
+</aside>
+
+<!-- CENTER: Feed -->
+<main class="card" id="feedCol">
+  <header style="display:flex;justify-content:space-between;align-items:center">
+    <h2 style="margin:0">News Feed</h2>
+    <div class="small">Welcome back — interact, shop, chat!</div>
+  </header>
+
+  <section class="composer" style="margin-top:12px">
+    <div class="avatar" style="width:48px;height:48px" id="composerAvatar">CU</div>
+    <div style="flex:1">
+      <textarea id="postText" placeholder="Share an update, product link, or sale... (images supported) "></textarea>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+        <div style="display:flex;gap:8px">
+          <input type="file" id="postImage" accept="image/*" />
+          <button class="btn" onclick="createPost()">Post</button>
+          <button class="btn secondary" onclick="saveDraft()">Save Draft</button>
+        </div>
+        <div class="small">Tag products with <code>#product:ID</code></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="feed" style="margin-top:18px"></section>
+
+</main>
+
+<!-- RIGHT: Products & Activities -->
+<aside class="card right">
+  <h3 style="margin-top:0">Products</h3>
+  <div id="productList"></div>
+
+  <hr style="margin:12px 0;border:none;border-top:1px dashed rgba(255,255,255,0.03)" />
+  <h4 style="margin:6px 0">Notifications</h4>
+  <div id="notifications"></div>
+
+  <hr style="margin:12px 0;border:none;border-top:1px dashed rgba(255,255,255,0.03)" />
+  <h4 style="margin:6px 0">Quick Actions</h4>
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <button class="btn" onclick="simulateAdminReply()">Simulate Admin Reply</button>
+    <button class="btn secondary" onclick="clearData()">Reset Mock Data</button>
+  </div>
+</aside>
+
+  </div>  <!-- MODALS -->  <div id="modal-compose" class="modal">
+    <div class="panel">
+      <h3>Create Post</h3>
+      <div style="display:flex;gap:12px">
+        <div style="flex:1">
+          <textarea id="modalPostText" placeholder="Write something..." style="width:100%;min-height:140px;background:transparent;border:1px solid rgba(255,255,255,0.04);padding:10px;border-radius:8px"></textarea>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <input type="file" id="modalPostImage" accept="image/*" />
+            <button class="btn" onclick="modalCreatePost()">Publish</button>
+            <button class="btn secondary" onclick="closeModal('compose')">Close</button>
+          </div>
+        </div>
+        <div style="width:360px">
+          <h4>Attach product</h4>
+          <select id="modalAttachProduct" style="width:100%;padding:8px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.03)"></select>
+          <div class="small" style="margin-top:8px">Preview</div>
+          <div id="modalAttachPreview" style="margin-top:8px"></div>
+        </div>
+      </div>
+    </div>
+  </div>  <div id="modal-cart" class="modal">
+    <div class="panel">
+      <h3>Your Cart</h3>
+      <div id="cartItems"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
+        <div class="small">Total: <strong id="cartTotal">$0.00</strong></div>
+        <div>
+          <button class="btn" onclick="checkout()">Checkout</button>
+          <button class="btn secondary" onclick="closeModal('cart')">Close</button>
+        </div>
+      </div>
+      <hr style="margin-top:12px;border:none;border-top:1px dashed rgba(255,255,255,0.03)" />
+      <div class="small">Checkout here is a stub — integrate real payment gateway (Stripe/PayPal) in backend.</div>
+    </div>
+  </div>  <div id="modal-customerService" class="modal">
+    <div class="panel two-col">
+      <div>
+        <h3>Customer Service Chat</h3>
+        <div class="chat" id="chatRoot">
+          <div class="messages" id="messages"></div>
+          <div class="chat-input">
+            <input id="chatInput" placeholder="Type your message..." style="flex:1;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit" />
+            <button class="btn" onclick="sendMessage()">Send</button>
+          </div>
+        </div>
+      </div>
+      <aside>
+        <h4>Admin Panel (mock)</h4>
+        <div class="small">Assign query to:</div>
+        <select id="assignTo" style="width:100%;padding:8px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.03);margin-bottom:8px">
+          <option>Agent: Alice</option>
+          <option>Agent: Bob</option>
+        </select>
+        <div class="small">Status:</div>
+        <select id="queryStatus" style="width:100%;padding:8px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.03);margin-bottom:8px">
+          <option>Open</option>
+          <option>In Progress</option>
+          <option>Resolved</option>
+        </select>
+        <div class="small">Admin quick reply</div>
+        <input id="adminReply" class="pill" placeholder="Type admin reply then click Send as Admin" />
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button class="btn" onclick="adminSend()">Send as Admin</button>
+          <button class="btn secondary" onclick="closeModal('customerService')">Close</button>
+        </div><hr style="margin:12px 0;border:none;border-top:1px dashed rgba(255,255,255,0.03)" />
+    <div class="small">Query details / notes</div>
+    <textarea id="adminNotes" style="width:100%;min-height:120px;background:transparent;border:1px solid rgba(255,255,255,0.03);padding:8px;border-radius:8px"></textarea>
+  </aside>
+</div>
+
+  </div>  <div id="modal-analytics" class="modal">
+    <div class="panel">
+      <h3>Analytics (client-side mock)</h3>
+      <div style="display:flex;gap:12px;align-items:center">
+        <div style="flex:1">
+          <div class="small">Users</div>
+          <div id="statUsers">0</div>
+        </div>
+        <div style="flex:1">
+          <div class="small">Sales</div>
+          <div id="statSales">0</div>
+        </div>
+        <div style="flex:1">
+          <div class="small">Orders</div>
+          <div id="statOrders">0</div>
+        </div>
+      </div>
+      <div class="small" style="margin-top:12px">This analytics is a placeholder. Replace with real events / server metrics (Google Analytics, Amplitude, or custom).</div>
+      <div style="display:flex;justify-content:flex-end;margin-top:12px">
+        <button class="btn secondary" onclick="closeModal('analytics')">Close</button>
+      </div>
+    </div>
+  </div>  <!-- Simple inline JS implementing mock behavior -->  <script>
+    /* ----------------- Mock data ----------------- */
+    const PRODUCTS = [
+      {id: 'p1', title: 'Kenyan AA Roasted Coffee', price: 12.5, img: 'https://picsum.photos/seed/coffee/200/200', stock: 32, rating:4.6},
+      {id: 'p2', title: 'Handmade Ceramic Mug', price: 8.99, img: 'https://picsum.photos/seed/mug/200/200', stock: 12, rating:4.2},
+      {id: 'p3', title: 'Eco Tote Bag', price: 6.5, img: 'https://picsum.photos/seed/tote/200/200', stock: 50, rating:4.8},
+    ];
+
+    let CART = JSON.parse(localStorage.getItem('demo_cart')||'{}');
+    let FEED = JSON.parse(localStorage.getItem('demo_feed')||'[]');
+    let MESSAGES = JSON.parse(localStorage.getItem('demo_msgs')||'[]');
+    let NOTIFS = JSON.parse(localStorage.getItem('demo_notifs')||'[]');
+
+    /* ----------------- Init UI ----------------- */
+    function init(){
+      renderProducts();
+      renderFeed();
+      renderCartCount();
+      renderNotifications();
+      renderMessages();
+      populateAttachList();
+      updateStats();
+      requestNotificationPermission();
+    }
+
+    function renderProducts(){
+      const el = document.getElementById('productList'); el.innerHTML='';
+      PRODUCTS.forEach(p=>{
+        const d = document.createElement('div'); d.className='product';
+        d.innerHTML = `<img src="${p.img}" alt="${p.title}" />
+          <div style="flex:1">
+            <div style="display:flex;justify-content:space-between;align-items:center"><strong>${p.title}</strong><div class="small">${p.rating}★</div></div>
+            <div class="small">$${p.price.toFixed(2)} • ${p.stock} in stock</div>
+            <div style="margin-top:8px;display:flex;gap:8px">
+              <button class="btn" onclick="addToCart('${p.id}')">Add</button>
+              <button class="btn secondary" onclick="openProductModal('${p.id}')">View</button>
+            </div>
+          </div>`;
+        el.appendChild(d);
+      });
+    }
+
+    function populateAttachList(){
+      const sel = document.getElementById('modalAttachProduct'); sel.innerHTML='';
+      PRODUCTS.forEach(p=>{const opt=document.createElement('option');opt.value=p.id;opt.textContent = `${p.title} — $${p.price}`;sel.appendChild(opt)});
+      sel.onchange = ()=>{const p=PRODUCTS.find(x=>x.id==sel.value);document.getElementById('modalAttachPreview').innerHTML = `<div class=product><img src="${p.img}"><div><strong>${p.title}</strong><div class=small>$${p.price}</div></div></div>`}
+      sel.dispatchEvent(new Event('change'));
+    }
+
+    /* ----------------- Feed / Posts ----------------- */
+    function saveDraft(){localStorage.setItem('demo_draft', document.getElementById('postText').value);alert('Draft saved (local)')}
+    function createPost(){
+      const text=document.getElementById('postText').value.trim();
+      const imgEl=document.getElementById('postImage');
+      const img = imgEl.files[0] ? URL.createObjectURL(imgEl.files[0]) : null;
+      if(!text && !img) return alert('Add some text or image');
+      const post = {id:'post_'+Date.now(), author:'Customer User', avatar:'CU', text, img, ts:Date.now(), likes:0, comments:[]};
+      FEED.unshift(post); localStorage.setItem('demo_feed', JSON.stringify(FEED)); renderFeed();
+      document.getElementById('postText').value=''; imgEl.value='';
+      pushNotif('New post published', `${post.author}: ${text.slice(0,80)}`);
+    }
+    function modalCreatePost(){const text=document.getElementById('modalPostText').value.trim();const pid=document.getElementById('modalAttachProduct').value;const p=PRODUCTS.find(x=>x.id==pid);const post={id:'post_'+Date.now(),author:'Customer User',avatar:'CU',text: text + (p?`\n#product:${p.id} — ${p.title}`:''),img:null,ts:Date.now(),likes:0,comments:[]};FEED.unshift(post);localStorage.setItem('demo_feed',JSON.stringify(FEED));renderFeed();closeModal('compose');}
+
+    function renderFeed(){const el=document.getElementById('feed');el.innerHTML='';FEED.forEach(post=>{const d=document.createElement('div');d.className='post';d.innerHTML=`<div class="meta"><div class="avatar" style="width:40px;height:40px">${post.avatar}</div><div><strong>${post.author}</strong><div class="small">${new Date(post.ts).toLocaleString()}</div></div></div><div style="margin-top:8px">${escapeHtml(post.text).replace(/\n/g,'<br>')}</div>${post.img?`<img src="${post.img}" style="width:100%;margin-top:8px;border-radius:8px">`:''}<div class="actions"><button class="pill" onclick='likePost("${post.id}")'>👍 ${post.likes}</button><button class="pill" onclick='openComments("${post.id}")'>💬 ${post.comments.length}</button><button class="pill" onclick='sharePost("${post.id}")'>🔗 Share</button></div>`;el.appendChild(d)});
+    }
+
+    function likePost(id){const p=FEED.find(x=>x.id==id);p.likes++;localStorage.setItem('demo_feed',JSON.stringify(FEED));renderFeed();}
+    function openComments(id){const p=FEED.find(x=>x.id==id);const txt = prompt('Add comment:'); if(txt){p.comments.push({author:'You',text:txt,ts:Date.now()});localStorage.setItem('demo_feed',JSON.stringify(FEED));renderFeed()}}
+    function sharePost(id){navigator.clipboard?.writeText(location.href+'#post='+id);alert('Post link copied (mock)')}
+
+    /* ----------------- Cart & Checkout ----------------- */
+    function addToCart(pid){CART[pid] = (CART[pid]||0) + 1;localStorage.setItem('demo_cart', JSON.stringify(CART));renderCartCount();pushNotif('Added to cart', PRODUCTS.find(p=>p.id==pid).title)}
+    function renderCartCount(){document.getElementById('cartCount').textContent = Object.values(CART).reduce((a,b)=>a+b,0)}
+    function openProductModal(pid){const p=PRODUCTS.find(x=>x.id==pid);openModal('cart');document.getElementById('cartItems').innerHTML=`<div style="display:flex;gap:12px"><img src='${p.img}' style='width:80px;height:80px'><div><strong>${p.title}</strong><div class='small'>$${p.price}</div></div></div>`;document.getElementById('cartTotal').textContent=`$${p.price.toFixed(2)}`}
+    function checkout(){alert('Checkout stub — integrate payments API (Stripe/PayPal).');closeModal('cart')}
+
+    /* ----------------- Notifications ----------------- */
+    function pushNotif(title, body){NOTIFS.unshift({id:'n_'+Date.now(),title,body,ts:Date.now()});localStorage.setItem('demo_notifs', JSON.stringify(NOTIFS));renderNotifications();try{new Notification(title,{body})}catch(e){}
+    }
+    function renderNotifications(){const el=document.getElementById('notifications');el.innerHTML='';NOTIFS.slice(0,6).forEach(n=>{const d=document.createElement('div');d.className='small';d.style.marginBottom='8px';d.innerHTML=`<strong>${n.title}</strong><div class='small'>${n.body}</div>`;el.appendChild(d)});
+    }
+    function requestNotificationPermission(){if('Notification' in window && Notification.permission !== 'granted') Notification.requestPermission()}
+
+    /* ----------------- Customer Service Chat ----------------- */
+    function renderMessages(){const el=document.getElementById('messages');el.innerHTML='';MESSAGES.forEach(m=>{const d=document.createElement('div');d.className='msg '+(m.from=='user'?'user':'admin');d.innerHTML=`<div>${escapeHtml(m.text)}</div><div class='small'>${new Date(m.ts).toLocaleTimeString()}</div>`;el.appendChild(d)});el.scrollTop = el.scrollHeight}
+    function sendMessage(){const txt=document.getElementById('chatInput').value.trim();if(!txt) return;const msg={from:'user',text:txt,ts:Date.now()};MESSAGES.push(msg);localStorage.setItem('demo_msgs',JSON.stringify(MESSAGES));renderMessages();document.getElementById('chatInput').value='';pushNotif('Message sent', txt.slice(0,80));setTimeout(()=>simulateAdminReply(),800)}
+    function adminSend(){const txt=document.getElementById('adminReply').value.trim();if(!txt) return;const msg={from:'admin',text:txt,ts:Date.now()};MESSAGES.push(msg);localStorage.setItem('demo_msgs',JSON.stringify(MESSAGES));renderMessages();document.getElementById('adminReply').value='';}
+    function simulateAdminReply(){const canned = ['Thanks for reaching out — we are on it.','Can you share your order number?','We have processed a refund (mock).','Please allow 3-5 business days.'];const r=canned[Math.floor(Math.random()*canned.length)];MESSAGES.push({from:'admin',text:r,ts:Date.now()});localStorage.setItem('demo_msgs',JSON.stringify(MESSAGES));renderMessages();pushNotif('Support replied', r)}
+
+    /* ----------------- Utilities & Moderation stubs ----------------- */
+    function openModal(name){document.getElementById('modal-'+name).classList.add('open')}
+    function closeModal(name){document.getElementById('modal-'+name).classList.remove('open')}
+    function clearData(){if(confirm('Clear mock local data?')){localStorage.removeItem('demo_cart');localStorage.removeItem('demo_feed');localStorage.removeItem('demo_msgs');localStorage.removeItem('demo_notifs');location.reload()}}
+
+    function adminReplyToPost(postId, text){const p = FEED.find(x=>x.id==postId); if(!p) return; p.comments.push({author:'Admin',text,text,ts:Date.now()}); localStorage.setItem('demo_feed',JSON.stringify(FEED)); renderFeed();}
+
+    function escapeHtml(text){return (text||'').replace(/[&<>"']/g, function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#039;"}[m]})}
+
+    /* ----------------- Search ----------------- */
+    function handleSearch(e){const q=e.target.value.toLowerCase();const results = PRODUCTS.filter(p=>p.title.toLowerCase().includes(q));const el = document.getElementById('productList');el.innerHTML='';results.forEach(p=>{const d=document.createElement('div');d.className='product';d.innerHTML=`<img src='${p.img}'><div style='flex:1'><strong>${p.title}</strong><div class='small'>$${p.price}</div></div>`;el.appendChild(d)})}
+
+    /* ----------------- Two‑Factor mock & security stubs ----------------- */
+    let twoFA=false; function toggleTwoFA(){twoFA=!twoFA;alert('2FA ' + (twoFA? 'enabled (mock)':'disabled (mock)'));}
+
+    /* ----------------- Small analytics stub ----------------- */
+    function updateStats(){document.getElementById('statUsers').textContent = Math.max(1, Math.floor(Math.random()*200));document.getElementById('statSales').textContent = Math.floor(Math.random()*1000);document.getElementById('statOrders').textContent = Math.floor(Math.random()*120)}
+
+    /* ----------------- On load ----------------- */
+    window.addEventListener('load', ()=>{
+      // ensure initial sample feed
+      if(FEED.length===0){FEED = [{id:'seed1',author:'Cafe Owner',avatar:'CO',text:'New harvest drop! #product:p1',img:PRODUCTS[0].img,ts:Date.now()-3600000,likes:12,comments:[]},{id:'seed2',author:'Handmade Co',avatar:'HC',text:'Limited ceramic sale #product:p2',img:PRODUCTS[1].img,ts:Date.now()-7200000,likes:6,comments:[]}];localStorage.setItem('demo_feed', JSON.stringify(FEED));}
+      init();
+    });
+
+    // convenience: expose some helpers (in real app use modules)
+    window.openModal=openModal;window.closeModal=closeModal;window.addToCart=addToCart;window.openProductModal=openProductModal;window.adminSend=adminSend;window.simulateAdminReply=simulateAdminReply;window.clearData=clearData;window.createPost=createPost;window.modalCreatePost=modalCreatePost;
+  </script>  <!-- FOOTER / INTEGRATION NOTES (non-rendered comment for developer) -->  <!--
+    This is a client-side mega scaffold integrating many UI features listed in your spec.
+    What this file DOES:
+      - Feed: create posts, images, likes, comments, tags to products
+      - Product list: add to cart, quick view
+      - Shopping cart modal: simple cart + checkout stub
+      - Customer Service Modal: live chat mock between user and admin (stored in localStorage)
+      - Notifications: browser Notification API (request permission)
+      - Analytics & Admin stubs: quick stats, admin replies, query assignment + notes
+      - Security stubs: 2FA toggle and notes about real security
+      - Integration points are commented: replace with backend endpoints and payment gateways
+
+    Next steps to make it production:
+      - Build REST API endpoints for posts, products, carts, messages, orders
+      - Replace localStorage mocks with authenticated server storage and real websockets
+      - Integrate payment gateway (Stripe/PayPal) on server side and secure order flow
+      - Add authentication, password hashing, 2FA, SSL on hosting
+      - Add CMS for content, moderation API, and admin dashboards
+  --></body>
+</html>
